@@ -1,0 +1,114 @@
+:root{
+  --OPEN: green;
+  --CLOSED: red;
+  --primary: blue;
+  --secondary:red;
+  --page-bg: #282c34;
+  --th-bg:linear-gradient(0deg, rgba(113,119,121,1) 0%, rgba(40,44,52,1) 100%);
+  --font-color:white;
+  --secondary-font-color:#181818;
+  --odd-row-bg:rgb(19, 28, 46);
+  --even-row-bg:rgba(255, 255, 255, 0.034);
+  --table-border:1px solid #4e4e4e;
+  --row-hover:#ffffff;
+}
+
+.oms1{
+  --OPEN: green;
+  --CLOSED: red;
+  --primary: blue;
+  --secondary:red;
+  --page-bg: #282c34;
+  --th-bg:linear-gradient(0deg, rgba(113,119,121,1) 0%, rgba(40,44,52,1) 100%);
+  --font-color:white;
+  --secondary-font-color:#181818;
+  --odd-row-bg:rgb(19, 28, 46);
+  --even-row-bg:rgba(255, 255, 255, 0.034);
+  --table-border:1px solid #4e4e4e;
+  --row-hover:#ffffff;
+}
+
+.oms2{
+  --OPEN: rgb(105, 128, 0);
+  --CLOSED: rgb(0, 81, 255);
+  --primary: blue;
+  --secondary:red;
+  --page-bg: #7a7a7a;
+  --th-bg:rgb(22, 175, 86);
+  --font-color:white;
+  --secondary-font-color:#353535;
+  --even-row-bg:rgb(19, 46, 41);
+  --odd-row-bg:rgba(255, 255, 255, 0.705);
+  --table-border:1px solid #4e4e4e;
+  --row-hover:#ffffff;
+}
+
+body {
+  min-width: 100vw;
+  color:var(--font-color);
+  text-align: center;
+}
+.App {
+  background-color: var(--page-bg);
+  min-width: 100%;
+  min-height: 100vh;
+  width: fit-content;
+}
+
+
+
+.App-header {
+  /* background-color: #282c34; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--font-color);
+}
+
+
+table {
+  margin-bottom:20px;
+  width:100vw;
+  border-collapse: collapse;
+  margin: 25px 0;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th {
+  background: var(--th-bg);
+  color: var(--font-color);
+
+}
+
+th,td{
+  padding:5px;
+}
+
+tbody tr:hover {
+  background: var(--row-hover);
+  color: var(--secondary-font-color);
+  cursor: pointer;
+}
+
+table, th {
+  border: var(--table-border);
+}
+
+td{
+  border-bottom: var(--table-border);
+}
+tbody tr:last-of-type {
+  border-bottom: 2px solid #009879;
+}
+tr:nth-child(even) {
+  background: var(--even-row-bg);
+  color: var(--font-color);
+}
+tr:nth-child(odd) {
+  background: var(--odd-row-bg);
+  color: var(--secondary-font-color);
+}

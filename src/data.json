@@ -1,0 +1,42 @@
+[
+  {
+    "orderId": "1234",
+    "system": "BBAIM/MUREX/CRD1/CRD2/CRD3",
+    "securityName": "VOD.LN",
+    "securityId": "1234",
+    "targetPrice": "22.39",
+    "targetQuantity": "22.39",
+    "targetAmount": "2000",
+    "manager": "CWATSON",
+    "trader": "CWATSON",
+    "tradeDate": "22/02/2021",
+    "account": "multi",
+    "status": "OPEN",
+    "broker": "CS",
+    "securityType": "CB",
+    "transactionType": "BUY / SELL",
+    "createDate": "20/02/2021",
+    "allocations": [
+      {
+        "tradeId": "1234",
+        "account": "ABC",
+        "targetQuantity": "1234",
+        "targetPrice": "2000",
+        "targetAmount": "22.39"
+      },
+      {
+        "trade_id": "12342",
+        "account": "ABCD",
+        "targetQuantity": "1234",
+        "targetPrice": "22.39",
+        "targetAmount": "22.39"
+      }
+    ],
+    "placement": [
+      {}
+    ],
+    "fills": [
+      {}
+    ]
+  }
+]
