@@ -1,18 +1,22 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import OMS1 from './OMS1';
-import OMS2 from './OMS2';
+import BBAIM from './routes/BBAIM';
+import CRD from './routes/CRD';
 import reportWebVitals from './reportWebVitals';
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+import MUREX from './routes/MUREX';
+import Combined from './routes/Combined';
 
 
 const load = () => ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
-        <Route path="/oms1" element={<OMS1 />} />
-        <Route path="/oms2" element={<OMS2 />} />
+        <Route path="/BBAIM" element={<BBAIM />} />
+        <Route path="/CRD" element={<CRD />} />
+        <Route path="/MUREX" element={<MUREX />} />
+        <Route path="/Combined" element={<Combined />} />
       </Routes>
     </BrowserRouter>
 

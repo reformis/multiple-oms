@@ -1,7 +1,8 @@
-import { Order } from '../types/orders';
-
-import "../styles.css"
 import { broadcast } from '@finos/fdc3';
+
+import { Order } from '../types/orders';
+import "../styles.css"
+import { percentComplete } from '../hooks/useOrders';
 
 interface Props {
   orders: Array<Order>;
@@ -14,7 +15,7 @@ export default function Blotter(props: Props) {
   const { orders, appCSS, title, appName } = props
 
   const sendOrder = (order: Order) => {
-    console.log("order: " + order)
+    console.log(order)
     broadcast({ type: "finsemble.order", order: { ...order, appName } });
   }
 
@@ -37,6 +38,7 @@ export default function Blotter(props: Props) {
             <th>Date</th>
             <th>Account</th>
             <th>Status</th>
+            <th>Exec Status</th>
             <th>Broker</th>
             <th>Security Type</th>
             <th>Side</th>
@@ -49,14 +51,15 @@ export default function Blotter(props: Props) {
               <td>{item.orderId}</td>
               <td>{item.securityName}</td>
               <td>{item.securityId}</td>
-              <td style={{ color: 'yellow' }}>{item.targetPrice}</td>
+              <td className="target-price">{item.targetPrice}</td>
               <td>{item.targetQuantity}</td>
               <td>{item.targetAmount}</td>
               <td>{item.manager}</td>
               <td>{item.trader}</td>
               <td>{item.tradeDate}</td>
               <td>{item.account}</td>
-              <td style={{ backgroundColor: item.status === "CLOSED" ? 'var(--CLOSED)' : 'var(--OPEN)' }}>{item.status}</td>
+              <td style={{ backgroundColor: `var(--${item.status})` }}>{item.status}</td>
+              <td>{percentComplete(item)}</td>
               <td>{item.broker}</td>
               <td>{item.securityType}</td>
               <td style={{ color: item.transactionType === "SELL" ? 'var(--CLOSED)' : 'var(--OPEN)' }}>{item.transactionType}</td>

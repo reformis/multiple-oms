@@ -11,36 +11,47 @@
   --even-row-bg:rgba(255, 255, 255, 0.034);
   --table-border:1px solid #4e4e4e;
   --row-hover:#ffffff;
+  --target-price:yellow;
 }
 
-.oms1{
+.bbaim{
   --OPEN: green;
-  --CLOSED: red;
+  --FILLED: red;
   --primary: blue;
   --secondary:red;
   --page-bg: #282c34;
   --th-bg:linear-gradient(0deg, rgba(113,119,121,1) 0%, rgba(40,44,52,1) 100%);
+  --th-font:sans-serif;
   --font-color:white;
   --secondary-font-color:#181818;
   --odd-row-bg:rgb(19, 28, 46);
   --even-row-bg:rgba(255, 255, 255, 0.034);
+  --even-row-color:rgba(255, 255, 255, 0.705);
+  --odd-row-color:rgba(255, 255, 255, 0.705);
   --table-border:1px solid #4e4e4e;
   --row-hover:#ffffff;
+  --target-price:yellow;
 }
 
-.oms2{
-  --OPEN: rgb(105, 128, 0);
-  --CLOSED: rgb(0, 81, 255);
+.crd{
+  --OPEN: rgb(21, 70, 231);
+  --FILLED: rgb(27, 231, 8);
+  --WORKING: rgb(166, 194, 9);
   --primary: blue;
-  --secondary:red;
-  --page-bg: #7a7a7a;
-  --th-bg:rgb(22, 175, 86);
-  --font-color:white;
-  --secondary-font-color:#353535;
-  --even-row-bg:rgb(19, 46, 41);
-  --odd-row-bg:rgba(255, 255, 255, 0.705);
-  --table-border:1px solid #4e4e4e;
-  --row-hover:#ffffff;
+  --secondary: red;
+  --page-bg: #f1f1f1;
+  --th-bg: rgb(22 124 175);
+  --th-font: sans-serif;
+  --th-color: white;
+  --font-color: #262626;
+  --secondary-font-color: #353535;
+  --even-row-bg: rgb(125 156 181);
+  --odd-row-bg: rgba(255, 255, 255, 0.705);
+  --even-row-color: var(--font-color);
+  --odd-row-color: var(--font-color);
+  --table-border: 1px solid #4e4e4e;
+  --row-hover: #b7b7b7;
+  --target-price: #340bfd;
 }
 
 body {
@@ -80,8 +91,8 @@ table {
 
 th {
   background: var(--th-bg);
-  color: var(--font-color);
-
+  font: var(--th-font);
+  color: var(--th-color);
 }
 
 th,td{
@@ -106,9 +117,13 @@ tbody tr:last-of-type {
 }
 tr:nth-child(even) {
   background: var(--even-row-bg);
-  color: var(--font-color);
+  color: var(--even-row-color);
 }
 tr:nth-child(odd) {
   background: var(--odd-row-bg);
-  color: var(--secondary-font-color);
+  color: var(--odd-row-color);
+}
+
+.target-price {
+color:var(--target-price);
 }

@@ -16,24 +16,21 @@ export interface Order {
   "trader": string,
   "tradeDate": string | Date,
   "account": string,
-  "status": string,
+  "status": "NEW", "WORKING", "FILLED",
   "broker": string,
   "securityType": string,
   "transactionType": "BUY" | "SELL",
   "createDate": string | Date,
-  "allocations": [
-    {
-      "tradeId": string | number,
-      "account": string,
-      "targetQuantity": string | number,
-      "targetPrice": string | number,
-      "targetAmount": string | number
-    }
-  ],
-  "placement": [
-    {}
-  ],
-  "fills": [
-    {}
-  ]
+  "allocations": Array<{ Allocation }>,
+  "placements": Array<{ Allocation }>,
+  "fills": Array<{ Allocation }>
+}
+
+
+interface Allocation {
+  "tradeId": string | number,
+  "account": string,
+  "targetQuantity": string | number,
+  "targetPrice": string | number,
+  "targetAmount": string | number
 }
