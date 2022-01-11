@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
 :root{
   --OPEN: green;
   --CLOSED: red;
@@ -31,6 +33,7 @@
   --table-border:1px solid #4e4e4e;
   --row-hover:#ffffff;
   --target-price:yellow;
+  --tb-font-size:0.8em;
 }
 
 .crd{
@@ -52,6 +55,56 @@
   --table-border: 1px solid #4e4e4e;
   --row-hover: #b7b7b7;
   --target-price: #340bfd;
+  --tb-font-size:0.9em;
+}
+.murex{
+  --OPEN: rgb(21, 70, 231);
+  --FILLED: rgb(27, 231, 8);
+  --WORKING: rgb(166, 194, 9);
+  --primary: blue;
+  --secondary: red;
+  --page-bg: #2b2b2b;
+  --th-bg: rgb(22, 50, 175);
+  --th-font: sans-serif;
+  --th-color: white;
+  --font-color: #262626;
+  --secondary-font-color: #353535;
+  --even-row-bg: rgb(166, 167, 168);
+  --odd-row-bg: rgba(255, 255, 255, 0.705);
+  --even-row-color: var(--font-color);
+  --odd-row-color: var(--font-color);
+  --table-border: 1px solid #4e4e4e;
+  --row-hover: #b7b7b7;
+  --target-price: #340bfd;
+  --tb-font-size:0.9em;
+}
+
+
+.combined{
+  --OPEN: rgb(21, 70, 231);
+  --FILLED: rgb(27, 231, 8);
+  --WORKING: rgb(166, 194, 9);
+  --primary: blue;
+  --secondary: red;
+  --page-bg: #f1f1f1;
+  --th-bg: rgb(8, 153, 68);
+  --th-font: sans-serif;
+  --th-color: rgb(255, 255, 255);
+  --font-color: #262626;
+  --secondary-font-color: #353535;
+  --even-row-bg: rgb(173, 194, 181);
+  --odd-row-bg: rgba(255, 255, 255, 0.705);
+  --even-row-color: var(--font-color);
+  --odd-row-color: var(--font-color);
+  --table-border: 0px solid #4e4e4e;
+  --row-hover: #49d182;
+  --target-price: #340bfd;
+  --tb-font-size:0.9em;
+  --tb-font: 'Roboto';
+}
+
+.combined th {
+  border: 0px;
 }
 
 body {
@@ -84,8 +137,8 @@ table {
   width:100vw;
   border-collapse: collapse;
   margin: 25px 0;
-  font-size: 0.9em;
-  font-family: sans-serif;
+  font-size: var(--tb-font-size);
+  font-family: var(--tb-font), sans-serif;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
 
@@ -113,7 +166,7 @@ td{
   border-bottom: var(--table-border);
 }
 tbody tr:last-of-type {
-  border-bottom: 2px solid #009879;
+  border-bottom: 2px solid var(--th-bg);
 }
 tr:nth-child(even) {
   background: var(--even-row-bg);
