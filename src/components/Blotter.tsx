@@ -1,8 +1,9 @@
-import { broadcast } from '@finos/fdc3';
+import { broadcast, getOrCreateChannel } from '@finos/fdc3';
 
 import { Order } from '../types/orders';
 import "../styles.css"
 import { percentComplete } from '../hooks/useOrders';
+import { useEffect } from 'react';
 
 interface Props {
   orders: Array<Order>;
@@ -19,6 +20,15 @@ export default function Blotter(props: Props) {
     broadcast({ type: "finsemble.order", order: { ...order, appName } });
   }
 
+  useEffect(() => {
+    console.log("updated sending order");
+    getOrCreateChannel("orders").then((channel) => {
+      orders.forEach((order) => {
+        channel.broadcast({ type: "finsemble.order", order: { ...order, appName } })
+      })
+    })
+  }, [appName, orders])
+
   return (
     <div className={`${appCSS} App`}>
       <header className="App-header">
@@ -27,43 +37,45 @@ export default function Blotter(props: Props) {
       <table>
         <thead>
           <tr>
-            <th>Order</th>
-            <th>Name</th>
-            <th>ID</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Amount</th>
+            <th>Order ID</th>
+            <th>Ticker</th>
+            <th>Security ID</th>
+            <th>Tgt Price</th>
+            <th>Tgt Quantity</th>
+            {/* target price * target Quantity */}
+            <th>Tgt Amount</th>
+            <th>Account</th>
             <th>Manager</th>
             <th>Trader</th>
-            <th>Date</th>
-            <th>Account</th>
+            <th>Trade Date</th>
+            {/* make settlement date 2 days later */}
+            <th>Settlement Date</th>
             <th>Status</th>
-            <th>Exec Status</th>
+            <th>Exec Qty</th>
             <th>Broker</th>
             <th>Security Type</th>
             <th>Side</th>
-            <th>Date</th>
           </tr>
         </thead>
         <tbody>
           {
             orders.map((item) => <tr key={item.orderId} onClick={() => { sendOrder(item) }}>
               <td>{item.orderId}</td>
-              <td>{item.securityName}</td>
+              <td>{item.ticker}</td>
               <td>{item.securityId}</td>
               <td className="target-price">{item.targetPrice}</td>
               <td>{item.targetQuantity}</td>
               <td>{item.targetAmount}</td>
+              <td>{item.account}</td>
               <td>{item.manager}</td>
               <td>{item.trader}</td>
               <td>{item.tradeDate}</td>
-              <td>{item.account}</td>
+              <td>{item.settlementDate}</td>
               <td style={{ backgroundColor: `var(--${item.status})` }}>{item.status}</td>
-              <td>{percentComplete(item)}</td>
+              <td>{item.executedQuantity}</td>
               <td>{item.broker}</td>
               <td>{item.securityType}</td>
-              <td style={{ color: item.transactionType === "SELL" ? 'var(--CLOSED)' : 'var(--OPEN)' }}>{item.transactionType}</td>
-              <td>{item.tradeDate}</td>
+              <td style={{ color: item.transactionType === "SELL" ? 'var(--CLOSED)' : 'var(--OPEN)' }}>{item.transactionType + "L"}</td>
             </tr>)
           }</tbody>
 
@@ -72,3 +84,33 @@ export default function Blotter(props: Props) {
     </div>
   );
 }
+
+//TODO: change these
+const brokers = ["CS", "JPM", "CITI", "MS", "BARC"]
+
+const securtiyTable = ["CB", "GB", "COM", "PFD"]
+
+// Dave is sending more columns
+
+/**
+ * From each blotter there needs to be a way to add an order:
+ *  - uuid auto
+ */
+
+
+/**
+ * Full exection:
+ * On the combined blotter :
+ * - execute button
+ *  - toggle to execute multiple
+ *  - the OMS it came from executes and the same time as the combine blotter
+ * - when done can click a done button and will remove the order from the combined blotter but not the other OMS
+ */
+
+
+/**
+ * notifications:
+ * - order arrives into combined suggesters
+ * - something is greater or less than the limit
+ */
+
