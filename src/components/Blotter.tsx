@@ -1,9 +1,7 @@
-import { broadcast, getOrCreateChannel } from '@finos/fdc3';
+import { broadcast } from '@finos/fdc3';
 
 import { Order } from '../types/orders';
 import "../styles.css"
-import { percentComplete } from '../hooks/useOrders';
-import { useEffect } from 'react';
 
 interface Props {
   orders: Array<Order>;
@@ -19,15 +17,6 @@ export default function Blotter(props: Props) {
     console.log(order)
     broadcast({ type: "finsemble.order", order: { ...order, appName } });
   }
-
-  useEffect(() => {
-    console.log("updated sending order");
-    getOrCreateChannel("orders").then((channel) => {
-      orders.forEach((order) => {
-        channel.broadcast({ type: "finsemble.order", order: { ...order, appName } })
-      })
-    })
-  }, [appName, orders])
 
   return (
     <div className={`${appCSS} App`}>

@@ -1,8 +1,8 @@
 import { addContextListener } from '@finos/fdc3';
-import { current, original } from 'immer';
+import { original } from 'immer';
 import { useCallback, useEffect } from 'react'
 import { useImmerReducer } from 'use-immer';
-import { Allocation, Order, OrderContext } from '../types/orders';
+import { Order, OrderContext } from '../types/orders';
 import { getRandomIntInclusive } from '../utils';
 
 interface Props {
@@ -30,20 +30,7 @@ export default function useOrders(props: Props) {
 
           draft[orderFillIndex].fills.push(newFill)
           draft[orderFillIndex].placements.shift()
-          return draft
           break;
-
-        case "placement":
-          //From the order get an allocation remove it from the allocation array and move it to the placements array
-
-          const placementIndex = draft.findIndex((order) => order.orderId === action.orderId);
-          draft[placementIndex].placements.push(action.allocation)
-
-          break;
-        case "deleteAllocation":
-          const AllocationOrderIndex = draft.findIndex((order) => order.orderId === action.orderId);
-          draft[AllocationOrderIndex].allocations.shift()
-          break
         default:
 
           console.warn("no action taken - order reducer")
@@ -66,20 +53,6 @@ export default function useOrders(props: Props) {
 
   }, [dispatch, orders]);
 
-  const addFill = useCallback((orderId: string | number) =>
-    dispatch({
-      type: "fill",
-      orderId
-    })
-    , [dispatch]);
-
-  const addPlacement = useCallback((orderId: string | number, allocation: Allocation) =>
-    dispatch({
-      type: "placement",
-      orderId,
-      allocation
-    })
-    , [dispatch]);
 
   // automatically subscribe to any context being sent - for linker selecting (user led)
   useEffect(() => {
@@ -102,50 +75,6 @@ export default function useOrders(props: Props) {
   }, [addOrder, appName])
 
 
-  /**
-   * Flow:
-   * Allocations > Placements > Fills
-   *
-   * To place/fill choose a random time value and then start pushing into the placement or fill array.
-   *
-   */
-  const startPlacementAndFill = useCallback((orderId: string | number) => {
-    const order = orders.find((order) => orderId === order.orderId);
-
-    if (!order) return
-
-    if (order.allocations.length !== 0) {
-      console.log(order.allocations)
-      setTimeout(() => {
-        //fill order
-        const allocation = order.allocations[0]
-        addPlacement(orderId, allocation)
-        dispatch({
-          type: "deleteAllocation",
-          orderId
-        })
-        startPlacementAndFill(orderId)
-      }, getRandomIntInclusive(500, 3000));
-    };
-
-    if (order.placements.length !== 0) {
-      setTimeout(() => {
-        //fill order
-        addFill(orderId)
-        startPlacementAndFill(orderId)
-      }, getRandomIntInclusive(500, 3000));
-    }
-  }, [addFill, addPlacement, dispatch, orders])
-
-
-  //use effect once to map through all orders and kick off the placementAndFill
-
-  useEffect(() => {
-    orders.forEach(({ orderId }) => {
-      // startPlacementAndFill(orderId)
-    })
-  }, [])
-
 
   /**
    * Notifications:
@@ -155,25 +84,6 @@ export default function useOrders(props: Props) {
 
 
   return {
-    orders, addOrder, addFill, addPlacement
+    orders, addOrder
   }
-}
-
-
-/**
- * calculates how much is left to fill in percentage
- * @param order
- * @returns
- */
-export function percentComplete(order: Order) {
-
-  const { allocations = [], placements = [], fills = [] } = order
-
-
-  const total = allocations.length + placements.length + fills.length || 0
-
-
-  if (total === 0) return total
-
-  return Math.round((fills.length / total) * 100)
 }

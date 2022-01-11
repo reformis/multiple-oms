@@ -22,17 +22,6 @@ export interface Order {
   broker: string,
   securityType: string,
   transactionType: "BUY" | "SELL",
-  createDate: string | Date,
-  allocations: Array<Allocation>,
-  placements: Array<Allocation>,
-  fills: Array<Allocation>
+  createDate: string | Date
 }
 
-
-interface Allocation {
-  tradeId: string | number,
-  account: string,
-  targetQuantity: string | number,
-  targetPrice: string | number,
-  targetAmount: string | number
-}
