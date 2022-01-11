@@ -16,8 +16,8 @@
 
 //  actions on the combined OMS
 
-import produce from 'immer'
-const data = require('./data2.json')
+// import produce from 'immer'
+// const data = require('./data2.json')
 
 const a = {
   "orderId": "1234",
@@ -38,7 +38,6 @@ const a = {
   "createDate": "20/02/2021"
 }
 
-Object.keys(a)
 
 
 const brokers = [
@@ -79,25 +78,29 @@ const brokers = [
   'UCPB'
 ]
 
-const orders = produce(data, draft => {
-  const index = draft.findIndex(todo => todo.orderId === "98520")
-  if (index !== -1) draft[index] = {
-    "orderId": "98520",
-    "securityName": "TIF",
-    "securityId": "29093",
-    "targetPrice": 34.45,
-    "targetAmount": "34.45",
-    "manager": "Kayne McKeeman",
-    "trader": "Innis Oxborrow",
-    "tradeDate": "05/11/2021",
-    "account": "Shanahan and Sons",
-    "status": "OPEN",
-    "broker": "CBCM",
-    "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "11/13/2021",
-    "targetQuantity": 483
-  }
-})
+// const orders = produce(data, draft => {
+//   const index = draft.findIndex(todo => todo.orderId === "98520")
+//   if (index !== -1) draft[index] = {
+//     "orderId": "98520",
+//     "securityName": "TIF",
+//     "securityId": "29093",
+//     "targetPrice": 34.45,
+//     "targetAmount": "34.45",
+//     "manager": "Kayne McKeeman",
+//     "trader": "Innis Oxborrow",
+//     "tradeDate": "05/11/2021",
+//     "account": "Shanahan and Sons",
+//     "status": "OPEN",
+//     "broker": "CBCM",
+//     "securityType": "CB",
+//     "transactionType": "BUY",
+//     "createDate": "11/13/2021",
+//     "targetQuantity": 483
+//   }
+// })
 
-console.log(orders)
+let x = brokers.pop()
+console.log(x)
+
+const y = [];
+y.length /*?*/
