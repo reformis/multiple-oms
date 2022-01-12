@@ -12,6 +12,8 @@ export default function MUREX() {
   const { orders } = useOrders({ defaultValue: shuffle(data) as Order[], appName })
 
   return (
+    <>
     <Blotter appName={appName} title="MUREX" appCSS="murex" orders={orders as Order[]} />
+    </>
   );
 }

@@ -23,13 +23,6 @@ export default function useOrders(props: Props) {
         case "fill":
           //From the order get a placement remove it from the placements array and move it to the fills array
           const orderFillIndex = draft.findIndex((order) => order.orderId === action.orderId);
-
-          const newFill = original(draft)?.[orderFillIndex]?.allocations[0]
-
-          if (!newFill) return
-
-          draft[orderFillIndex].fills.push(newFill)
-          draft[orderFillIndex].placements.shift()
           break;
         default:
 

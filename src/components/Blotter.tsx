@@ -2,12 +2,14 @@ import { broadcast } from '@finos/fdc3';
 
 import { Order } from '../types/orders';
 import "../styles.css"
+import { ReactNode } from 'react';
 
 interface Props {
   orders: Array<Order>;
   appCSS: string;
   title: string;
-  appName: string
+  appName: string;
+  children?: ReactNode;
 }
 
 export default function Blotter(props: Props) {
@@ -23,6 +25,7 @@ export default function Blotter(props: Props) {
       <header className="App-header">
         {title}
       </header>
+      {props.children}
       <table>
         <thead>
           <tr>

@@ -6,6 +6,7 @@ export interface OrderContext extends Context {
 
 export interface Order {
   appName: string,
+  destinationApp: string,
   orderId: string | number,
   ticker: string;
   securityId: string | number,
@@ -21,7 +22,6 @@ export interface Order {
   executedQuantity: number | string;
   broker: string,
   securityType: string,
-  transactionType: "BUY" | "SELL",
-  createDate: string | Date
+  transactionType: "BUY" | "SELL"
 }
 

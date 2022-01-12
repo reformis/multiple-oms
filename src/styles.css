@@ -180,3 +180,44 @@ tr:nth-child(odd) {
 .target-price {
 color:var(--target-price);
 }
+
+form {
+  display: inline-grid;
+  /* flex-direction: column; */
+  align-content: space-between;
+  color: var(--font-color);
+  border: 1px solid grey;
+  /* width: 221px; */
+  padding: 13px;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  justify-items: stretch;
+  /* text-align: left; */
+  justify-content: center;
+}
+
+input {
+  margin-bottom: 10px;
+}
+
+select {
+  margin-bottom: 10px;
+}
+
+form div {
+  display: grid;
+  justify-content: center;
+  align-content: space-evenly;
+  justify-items: initial;
+  grid-template-columns: 1fr 1fr;
+}
+
+form span {
+  color: red;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+form select {
+  width: 100%;
+}
