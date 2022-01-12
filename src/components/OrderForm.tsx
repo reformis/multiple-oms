@@ -4,39 +4,31 @@ import * as Yup from "yup";
 import { getRandomIntInclusive } from "../utils";
 
 const SignupSchema = Yup.object().shape({
-  name: Yup.string().required("Required"),
   orderId: Yup.string().required("Required"),
   ticker: Yup.string().required("Required"),
-  securityId: Yup.string().required("Required"),
   targetPrice: Yup.string().required("Required"),
   targetQuantity: Yup.string().required("Required"),
-  targetAmount: Yup.string().required("Required"),
   manager: Yup.string().required("Required"),
   trader: Yup.string().required("Required"),
   tradeDate: Yup.string().required("Required"),
-  settlementDate: Yup.string().required("Required"),
   account: Yup.string().required("Required"),
-  status: Yup.string().required("Required"),
-  executedQuantity: Yup.string().required("Required"),
   broker: Yup.string().required("Required"),
   securityType: Yup.string().required("Required"),
   transactionType: Yup.string().required("Required"),
-  createDate: Yup.string().required("Required"),
 });
 
 const initialValues = {
   orderId: getRandomIntInclusive(1000, 5000),
   ticker: "AAPL",
-  targetPrice: "",
-  targetQuantity: "",
-  targetAmount: "",
-  manager: "",
-  trader: "",
-  tradeDate: new Date(),
-  account: "",
-  broker: "",
-  securityType: "",
-  transactionType: "",
+  targetPrice: 42,
+  targetQuantity: 200,
+  manager: "Dave",
+  trader: "Dave",
+  tradeDate: new Date().toISOString().split("T")[0],
+  account: "PF76876",
+  broker: "CS",
+  securityType: "CB",
+  transactionType: "D",
 };
 
 interface InputProps {
@@ -95,21 +87,42 @@ const SelectField = ({
 export function OrderForm() {
   return (
     <div>
-      <h1>Signup</h1>
       <Formik
         initialValues={initialValues}
         validationSchema={SignupSchema}
         onSubmit={(values) => {
-          const settlementDate = new Date(values.tradeDate);
-          settlementDate.setDate(settlementDate.getDate() + 1);
+          console.log(values);
+          let date = new Date(values.tradeDate);
+          date.setDate(date.getDate() + 2);
+          const settlementDate = date.toISOString().split("T")[0];
 
           const order = {
             ...values,
             securityId: getRandomIntInclusive(1000, 5000),
             settlementDate,
+            targetAmount:
+              Number(values.targetPrice) * Number(values.targetQuantity),
             status: "NEW",
             executedQuantity: 0,
           };
+
+          /*
+          ticker: "",
+          securityId: "",
+          targetPrice: "",
+          targetQuantity: "",
+          targetAmount: "",
+          manager: "",
+          trader: "",
+          tradeDate: "",
+          settlementDate: "",
+          account: "",
+          status: "NEW",
+          executedQuantity: "",
+          broker: "",
+          securityType: "",
+          transactionType: "",
+          createDate: "", */
 
           // add the order to state
           // broadcast the order to combined blotter
@@ -126,14 +139,12 @@ export function OrderForm() {
           <TextInputField
             name="targetPrice"
             label="Target Price"
+            type="number"
           ></TextInputField>
           <TextInputField
             name="targetQuantity"
             label="Target Quantity"
-          ></TextInputField>
-          <TextInputField
-            name="targetAmount"
-            label="Target Amount"
+            type="number"
           ></TextInputField>
           <SelectField name="manager" label="Manager" options={[]} />
           <SelectField
@@ -196,24 +207,6 @@ export function OrderForm() {
               { value: "FOK", label: "FOK" },
             ]}
           />
-
-          {/*
-          ticker: "",
-          securityId: "",
-          targetPrice: "",
-          targetQuantity: "",
-          targetAmount: "",
-          manager: "",
-          trader: "",
-          tradeDate: "",
-          settlementDate: "",
-          account: "",
-          status: "NEW",
-          executedQuantity: "",
-          broker: "",
-          securityType: "",
-          transactionType: "",
-          createDate: "", */}
 
           <button type="submit">Submit</button>
         </Form>

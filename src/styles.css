@@ -208,7 +208,7 @@ form div {
   display: grid;
   justify-content: center;
   align-content: space-evenly;
-  justify-items: initial;
+  justify-items: start;
   grid-template-columns: 1fr 1fr;
 }
 
@@ -220,4 +220,9 @@ form span {
 
 form select {
   width: 100%;
+}
+
+form button {
+  width: 50%;
+  margin: 0 auto;
 }
