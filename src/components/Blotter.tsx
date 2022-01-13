@@ -2,9 +2,17 @@ import { broadcast } from '@finos/fdc3';
 
 import { Order } from '../types/orders';
 import "../styles.css"
-import { ReactNode } from 'react';
+import {
+  ReactComponentElement,
+  ReactElement,
+  ReactNode,
+  SyntheticEvent,
+  useState,
+} from "react";
+import { MenuProps } from "./Menu";
 
 interface Props {
+  menu(props: MenuProps): ReactNode;
   orders: Array<Order>;
   appCSS: string;
   title: string;
@@ -13,18 +21,22 @@ interface Props {
 }
 
 export default function Blotter(props: Props) {
-  const { orders, appCSS, title, appName } = props
+  const { orders, appCSS, title, appName } = props;
 
-  const sendOrder = (order: Order) => {
-    console.log(order)
-    broadcast({ type: "finsemble.order", order: { ...order, appName } });
-  }
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [menuIsVisible, setMenuIsVisible] = useState(false);
+
+  const showMenu = (order: Order, event: React.MouseEvent<HTMLElement>) => {
+    // broadcast({ type: "finsemble.order", order: { ...order, appName } });
+    setPosition({ x: event.pageX, y: event.pageY });
+    setMenuIsVisible(true);
+    console.log(event);
+  };
 
   return (
     <div className={`${appCSS} App`}>
-      <header className="App-header">
-        {title}
-      </header>
+      {props.menu({ show: menuIsVisible, position })}
+      <header className="App-header">{title}</header>
       {props.children}
       <table>
         <thead>
@@ -47,11 +59,19 @@ export default function Blotter(props: Props) {
             <th>Broker</th>
             <th>Security Type</th>
             <th>Side</th>
+            <th>Duration</th>
+            <th>Instruction</th>
+            <th>Limit</th>
           </tr>
         </thead>
         <tbody>
-          {
-            orders.map((item) => <tr key={item.orderId} onClick={() => { sendOrder(item) }}>
+          {orders.map((item) => (
+            <tr
+              key={item.orderId}
+              onClick={(event) => {
+                showMenu(item, event);
+              }}
+            >
               <td>{item.orderId}</td>
               <td>{item.ticker}</td>
               <td>{item.securityId}</td>
@@ -63,31 +83,34 @@ export default function Blotter(props: Props) {
               <td>{item.trader}</td>
               <td>{item.tradeDate}</td>
               <td>{item.settlementDate}</td>
-              <td style={{ backgroundColor: `var(--${item.status})` }}>{item.status}</td>
+              <td style={{ backgroundColor: `var(--${item.status})` }}>
+                {item.status}
+              </td>
               <td>{item.executedQuantity}</td>
               <td>{item.broker}</td>
               <td>{item.securityType}</td>
-              <td style={{ color: item.transactionType === "SELL" ? 'var(--CLOSED)' : 'var(--OPEN)' }}>{item.transactionType + "L"}</td>
-            </tr>)
-          }</tbody>
-
-
+              <td
+                style={{
+                  color:
+                    item.transactionType === "SELL"
+                      ? "var(--CLOSED)"
+                      : "var(--OPEN)",
+                }}
+              >
+                {item.transactionType}
+              </td>
+              <td>{item.duration}</td>
+              <td>{item.instruction}</td>
+              <td>{item.limit}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
 }
 
-//TODO: change these
-const brokers = ["CS", "JPM", "CITI", "MS", "BARC"]
 
-const securtiyTable = ["CB", "GB", "COM", "PFD"]
-
-// Dave is sending more columns
-
-/**
- * From each blotter there needs to be a way to add an order:
- *  - uuid auto
- */
 
 
 /**

@@ -1,21 +1,30 @@
-import data from '../mock-data/data2.json'
+import data from "../mock-data/data2.json";
 
-import Blotter from '../components/Blotter';
-import { Order } from '../types/orders';
-import useOrders from '../hooks/useOrders';
-import { shuffle } from '../utils';
-import { OrderForm } from '../components/OrderForm';
-
+import Blotter from "../components/Blotter";
+import { Order } from "../types/orders";
+import useOrders from "../hooks/useOrders";
+import { shuffle } from "../utils";
+import { OrderForm } from "../components/OrderForm";
+import Menu, { MenuProps } from "../components/Menu";
 
 export default function CRD() {
-  const appName = "CRD"
+  const appName = "CRD";
 
-  const { orders } = useOrders({ defaultValue: shuffle(data) as Order[], appName })
+  const { orders } = useOrders({
+    defaultValue: shuffle(data) as Order[],
+    appName,
+  });
 
   return (
     <>
-      <Blotter appName={appName} title="CRD" appCSS="crd" orders={orders as Order[]}>
-        <OrderForm />
+      <Blotter
+        appName={appName}
+        title="CRD"
+        appCSS="crd"
+        orders={orders as Order[]}
+        menu={(props: MenuProps) => <Menu {...props} />}
+      >
+        <OrderForm appName={appName} />
       </Blotter>
     </>
   );
