@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getRandomIntInclusive } from "../utils";
+import { broadcast } from "@finos/fdc3";
 
 const SignupSchema = Yup.object().shape({
   orderId: Yup.string().required("Required"),
@@ -28,7 +29,9 @@ const initialValues = {
   account: "PF76876",
   broker: "CS",
   securityType: "CB",
-  transactionType: "D",
+  transactionType: "BUYL",
+  duration: "D",
+  instruction: "MKT",
 };
 
 interface InputProps {
@@ -84,7 +87,7 @@ const SelectField = ({
   </div>
 );
 
-export function OrderForm() {
+export function OrderForm({ appName }: { appName: string }) {
   return (
     <div>
       <Formik
@@ -105,24 +108,6 @@ export function OrderForm() {
             status: "NEW",
             executedQuantity: 0,
           };
-
-          /*
-          ticker: "",
-          securityId: "",
-          targetPrice: "",
-          targetQuantity: "",
-          targetAmount: "",
-          manager: "",
-          trader: "",
-          tradeDate: "",
-          settlementDate: "",
-          account: "",
-          status: "NEW",
-          executedQuantity: "",
-          broker: "",
-          securityType: "",
-          transactionType: "",
-          createDate: "", */
 
           // add the order to state
           // broadcast the order to combined blotter
@@ -205,6 +190,15 @@ export function OrderForm() {
               { value: "GTC", label: "GTC" },
               { value: "GTD", label: "GTD" },
               { value: "FOK", label: "FOK" },
+            ]}
+          />
+          <SelectField
+            name="instruction"
+            label="instruction"
+            options={[
+              { value: "MKT", label: "MKT" },
+              { value: "LIM", label: "LIM" },
+              { value: "MO", label: "MO" },
             ]}
           />
 
