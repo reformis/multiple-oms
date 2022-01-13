@@ -1,723 +1,212 @@
 [
   {
-    "orderId": "33586",
-    "securityName": "ARGS",
-    "securityId": "01223",
-    "targetPrice": 56.14,
-    "targetAmount": "56.14",
-    "manager": "Rob Gozney",
-    "trader": "Zorah Gardener",
-    "tradeDate": "20/12/2021",
-    "account": "r66k2k",
-    "status": "WORKING",
-    "broker": "PBCM",
-    "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "12/30/2021",
-    "targetQuantity": 205,
-    "allocations": [
-      {
-        "tradeId": "81915",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      },
-      {
-        "tradeId": "50238",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      },
-      {
-        "tradeId": "31151",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      },
-      {
-        "tradeId": "64956",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      },
-      {
-        "tradeId": "97874",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      },
-      {
-        "tradeId": "10427",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      },
-      {
-        "tradeId": "59107",
-        "account": "r66k2k",
-        "targetQuantity": "205",
-        "targetPrice": "56.14",
-        "targetAmount": "56.14"
-      }
-    ],
-    "placements": [],
-    "fills": []
-  },
-  {
-    "orderId": "58882",
-    "securityName": "COGT",
-    "securityId": "50447",
-    "targetPrice": 57.41,
-    "targetAmount": "57.41",
-    "manager": "Kathi Franek",
-    "trader": "Ronna Hymas",
-    "tradeDate": "13/04/2021",
-    "account": "m97l6k",
+    "orderId": 1026,
+    "ticker": "LDR",
+    "securityId": 4074,
+    "targetPrice": 29.14,
+    "targetQuantity": 571,
+    "targetAmount": 16639,
+    "account": "PF98262",
+    "manager": "Rhianna Parmenter",
+    "trader": "Graig Lacky",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
     "status": "OPEN",
-    "broker": "MBML",
-    "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "03/08/2021",
-    "targetQuantity": 919,
-    "allocations": [
-      {
-        "tradeId": "34857",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      },
-      {
-        "tradeId": "52081",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      },
-      {
-        "tradeId": "09871",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      },
-      {
-        "tradeId": "07421",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      },
-      {
-        "tradeId": "86999",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      },
-      {
-        "tradeId": "01092",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      },
-      {
-        "tradeId": "36393",
-        "account": "m97l6k",
-        "targetQuantity": "919",
-        "targetPrice": "57.41",
-        "targetAmount": "57.41"
-      }
-    ],
-    "placements": [],
-    "fills": []
+    "executedQuantity": 0,
+    "broker": "CITI",
+    "securityType": "GB",
+    "transactionType": "SELLL",
+    "duration": "FOK",
+    "instruction": "LIM",
+    "limit": ""
   },
   {
-    "orderId": "70481",
-    "securityName": "DGLD",
-    "securityId": "03406",
-    "targetPrice": 8.01,
-    "targetAmount": "8.01",
-    "manager": "Michaeline Stollery",
-    "trader": "Reine Ianni",
-    "tradeDate": "16/10/2021",
-    "account": "d39n7o",
-    "status": "WORKING",
-    "broker": "RSBK",
-    "securityType": "CB",
-    "transactionType": "SELL",
-    "createDate": "11/05/2021",
-    "targetQuantity": 881,
-    "allocations": [
-      {
-        "tradeId": "87872",
-        "account": "d39n7o",
-        "targetQuantity": "881",
-        "targetPrice": "8.01",
-        "targetAmount": "8.01"
-      },
-      {
-        "tradeId": "71053",
-        "account": "d39n7o",
-        "targetQuantity": "881",
-        "targetPrice": "8.01",
-        "targetAmount": "8.01"
-      },
-      {
-        "tradeId": "18415",
-        "account": "d39n7o",
-        "targetQuantity": "881",
-        "targetPrice": "8.01",
-        "targetAmount": "8.01"
-      },
-      {
-        "tradeId": "55178",
-        "account": "d39n7o",
-        "targetQuantity": "881",
-        "targetPrice": "8.01",
-        "targetAmount": "8.01"
-      },
-      {
-        "tradeId": "69226",
-        "account": "d39n7o",
-        "targetQuantity": "881",
-        "targetPrice": "8.01",
-        "targetAmount": "8.01"
-      }
-    ],
-    "placements": [],
-    "fills": []
+    "orderId": 2787,
+    "ticker": "ORBK",
+    "securityId": 4202,
+    "targetPrice": 75.78,
+    "targetQuantity": 473,
+    "targetAmount": 35844,
+    "account": "PF72763",
+    "manager": "Gert Wheatland",
+    "trader": "Nappy Madgwick",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
+    "status": "FILLED",
+    "executedQuantity": 100,
+    "broker": "BARC",
+    "securityType": "PFD",
+    "transactionType": "SELLL",
+    "duration": "FOK",
+    "instruction": "MO",
+    "limit": ""
   },
   {
-    "orderId": "51497",
-    "securityName": "AR",
-    "securityId": "72273",
-    "targetPrice": 25.23,
-    "targetAmount": "25.23",
-    "manager": "Urbanus Titchener",
-    "trader": "Cindy Willers",
-    "tradeDate": "08/10/2021",
-    "account": "e85u0e",
+    "orderId": 3223,
+    "ticker": "AOBC",
+    "securityId": 2304,
+    "targetPrice": 42.73,
+    "targetQuantity": 449,
+    "targetAmount": 19186,
+    "account": "PF43537",
+    "manager": "Corty Jellard",
+    "trader": "Bryan Lorey",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
     "status": "OPEN",
-    "broker": "BSCB",
-    "securityType": "CB",
-    "transactionType": "SELL",
-    "createDate": "12/22/2021",
-    "targetQuantity": 140,
-    "allocations": [
-      {
-        "tradeId": "58057",
-        "account": "e85u0e",
-        "targetQuantity": "140",
-        "targetPrice": "25.23",
-        "targetAmount": "25.23"
-      },
-      {
-        "tradeId": "48156",
-        "account": "e85u0e",
-        "targetQuantity": "140",
-        "targetPrice": "25.23",
-        "targetAmount": "25.23"
-      },
-      {
-        "tradeId": "84075",
-        "account": "e85u0e",
-        "targetQuantity": "140",
-        "targetPrice": "25.23",
-        "targetAmount": "25.23"
-      },
-      {
-        "tradeId": "21257",
-        "account": "e85u0e",
-        "targetQuantity": "140",
-        "targetPrice": "25.23",
-        "targetAmount": "25.23"
-      },
-      {
-        "tradeId": "07004",
-        "account": "e85u0e",
-        "targetQuantity": "140",
-        "targetPrice": "25.23",
-        "targetAmount": "25.23"
-      }
-    ],
-    "placements": [],
-    "fills": []
+    "executedQuantity": 0,
+    "broker": "JPM",
+    "securityType": "GB",
+    "transactionType": "SELLL",
+    "duration": "FOK",
+    "instruction": "LIM",
+    "limit": ""
   },
   {
-    "orderId": "60494",
-    "securityName": "ECHO",
-    "securityId": "69815",
-    "targetPrice": 63.43,
-    "targetAmount": "63.43",
-    "manager": "Karly Rickert",
-    "trader": "Hardy Gobel",
-    "tradeDate": "23/05/2021",
-    "account": "c41s1a",
+    "orderId": 4409,
+    "ticker": "LLNW",
+    "securityId": 4947,
+    "targetPrice": 10.64,
+    "targetQuantity": 100,
+    "targetAmount": 1064,
+    "account": "PF98765",
+    "manager": "Kathie St. Ledger",
+    "trader": "Gabie Prator",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
+    "status": "FILLED",
+    "executedQuantity": 100,
+    "broker": "JPM",
+    "securityType": "PFD",
+    "transactionType": "BUYL",
+    "duration": "FOK",
+    "instruction": "MO",
+    "limit": ""
+  },
+  {
+    "orderId": 4770,
+    "ticker": "RTEC",
+    "securityId": 1381,
+    "targetPrice": 97.28,
+    "targetQuantity": 236,
+    "targetAmount": 22958,
+    "account": "PF19827",
+    "manager": "Haroun Sommers",
+    "trader": "Ermina Mattedi",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
+    "status": "FILLED",
+    "executedQuantity": 100,
+    "broker": "CS",
+    "securityType": "CB",
+    "transactionType": "BUYL",
+    "duration": "GTC",
+    "instruction": "LIM",
+    "limit": ""
+  },
+  {
+    "orderId": 1672,
+    "ticker": "GSL^B",
+    "securityId": 1612,
+    "targetPrice": 50.3,
+    "targetQuantity": 103,
+    "targetAmount": 5181,
+    "account": "PF19827",
+    "manager": "Ashlie Vondrasek",
+    "trader": "Seline Langton",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
+    "status": "ACCNT",
+    "executedQuantity": 100,
+    "broker": "JPM",
+    "securityType": "CB",
+    "transactionType": "BUYL",
+    "duration": "FOK",
+    "instruction": "MO",
+    "limit": ""
+  },
+  {
+    "orderId": 2451,
+    "ticker": "SCVL",
+    "securityId": 4223,
+    "targetPrice": 39.81,
+    "targetQuantity": 743,
+    "targetAmount": 29579,
+    "account": "PF98262",
+    "manager": "Christian Manger",
+    "trader": "Atlanta Yurkin",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
     "status": "WORKING",
-    "broker": "AMAB",
-    "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "07/17/2021",
-    "targetQuantity": 786,
-    "allocations": [
-      {
-        "tradeId": "03899",
-        "account": "c41s1a",
-        "targetQuantity": "786",
-        "targetPrice": "63.43",
-        "targetAmount": "63.43"
-      },
-      {
-        "tradeId": "71769",
-        "account": "c41s1a",
-        "targetQuantity": "786",
-        "targetPrice": "63.43",
-        "targetAmount": "63.43"
-      },
-      {
-        "tradeId": "87673",
-        "account": "c41s1a",
-        "targetQuantity": "786",
-        "targetPrice": "63.43",
-        "targetAmount": "63.43"
-      },
-      {
-        "tradeId": "37037",
-        "account": "c41s1a",
-        "targetQuantity": "786",
-        "targetPrice": "63.43",
-        "targetAmount": "63.43"
-      }
-    ],
-    "placements": [],
-    "fills": []
+    "executedQuantity": 0,
+    "broker": "JPM",
+    "securityType": "GB",
+    "transactionType": "SELLL",
+    "duration": "D",
+    "instruction": "MO",
+    "limit": ""
   },
   {
-    "orderId": "90949",
-    "securityName": "RGEN",
-    "securityId": "33131",
-    "targetPrice": 53.38,
-    "targetAmount": "53.38",
-    "manager": "Aloin Cardnell",
-    "trader": "Mindy Reckless",
-    "tradeDate": "17/03/2021",
-    "account": "t11z9s",
+    "orderId": 3327,
+    "ticker": "SINO",
+    "securityId": 2595,
+    "targetPrice": 43.55,
+    "targetQuantity": 343,
+    "targetAmount": 14938,
+    "account": "PF19827",
+    "manager": "Saleem Jeannaud",
+    "trader": "Robyn Blant",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
     "status": "OPEN",
-    "broker": "PCCI",
+    "executedQuantity": 0,
+    "broker": "BARC",
     "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "04/30/2021",
-    "targetQuantity": 864,
-    "allocations": [
-      {
-        "tradeId": "69144",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "82384",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "81250",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "57311",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "67512",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "88373",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "16461",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "66802",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      },
-      {
-        "tradeId": "44593",
-        "account": "t11z9s",
-        "targetQuantity": "864",
-        "targetPrice": "53.38",
-        "targetAmount": "53.38"
-      }
-    ],
-    "placements": [],
-    "fills": []
+    "transactionType": "SELLL",
+    "duration": "FOK",
+    "instruction": "MKT",
+    "limit": ""
   },
   {
-    "orderId": "87893",
-    "securityName": "CDEV",
-    "securityId": "02023",
-    "targetPrice": 73.23,
-    "targetAmount": "73.23",
-    "manager": "Viviyan Ungerecht",
-    "trader": "Dukey Lightoller",
-    "tradeDate": "15/12/2021",
-    "account": "z51d7q",
+    "orderId": 1065,
+    "ticker": "DNP",
+    "securityId": 3970,
+    "targetPrice": 24.25,
+    "targetQuantity": 390,
+    "targetAmount": 9458,
+    "account": "PF98383",
+    "manager": "Danielle McEvilly",
+    "trader": "Freeland Bolzmann",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
+    "status": "ACCNT",
+    "executedQuantity": 100,
+    "broker": "CITI",
+    "securityType": "PFD",
+    "transactionType": "SELLL",
+    "duration": "GTC",
+    "instruction": "MO",
+    "limit": ""
+  },
+  {
+    "orderId": 2208,
+    "ticker": "GTY",
+    "securityId": 4659,
+    "targetPrice": 76.23,
+    "targetQuantity": 578,
+    "targetAmount": 44061,
+    "account": "PF72763",
+    "manager": "Mada Ellissen",
+    "trader": "Chickie Guerreau",
+    "tradeDate": "2022-01-11",
+    "settlementDate": "2022-01-13",
     "status": "WORKING",
-    "broker": "UBPH",
+    "executedQuantity": 0,
+    "broker": "CS",
     "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "06/10/2021",
-    "targetQuantity": 233,
-    "allocations": [
-      {
-        "tradeId": "84330",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "34748",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "35925",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "56650",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "90932",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "75772",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "53034",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "03636",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "95756",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      },
-      {
-        "tradeId": "59236",
-        "account": "z51d7q",
-        "targetQuantity": "233",
-        "targetPrice": "73.23",
-        "targetAmount": "73.23"
-      }
-    ],
-    "placements": [],
-    "fills": []
-  },
-  {
-    "orderId": "13562",
-    "securityName": "HL^B",
-    "securityId": "91316",
-    "targetPrice": 74.27,
-    "targetAmount": "74.27",
-    "manager": "Constanta Taile",
-    "trader": "Fidole Glover",
-    "tradeDate": "07/01/2022",
-    "account": "e61l7n",
-    "status": "OPEN",
-    "broker": "PBBK",
-    "securityType": "CB",
-    "transactionType": "SELL",
-    "createDate": "01/14/2021",
-    "targetQuantity": 754,
-    "allocations": [
-      {
-        "tradeId": "14438",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "34295",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "23152",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "54946",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "12835",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "16710",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "77857",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "66817",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "95710",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      },
-      {
-        "tradeId": "67162",
-        "account": "e61l7n",
-        "targetQuantity": "754",
-        "targetPrice": "74.27",
-        "targetAmount": "74.27"
-      }
-    ],
-    "placements": [],
-    "fills": []
-  },
-  {
-    "orderId": "82864",
-    "securityName": "ETG",
-    "securityId": "28248",
-    "targetPrice": 17.36,
-    "targetAmount": "17.36",
-    "manager": "Mead Vynall",
-    "trader": "Clem Hibbart",
-    "tradeDate": "15/05/2021",
-    "account": "z41i3t",
-    "status": "OPEN",
-    "broker": "PVBM",
-    "securityType": "CB",
-    "transactionType": "BUY",
-    "createDate": "07/15/2021",
-    "targetQuantity": 426,
-    "allocations": [
-      {
-        "tradeId": "25083",
-        "account": "z41i3t",
-        "targetQuantity": "426",
-        "targetPrice": "17.36",
-        "targetAmount": "17.36"
-      },
-      {
-        "tradeId": "96281",
-        "account": "z41i3t",
-        "targetQuantity": "426",
-        "targetPrice": "17.36",
-        "targetAmount": "17.36"
-      },
-      {
-        "tradeId": "24200",
-        "account": "z41i3t",
-        "targetQuantity": "426",
-        "targetPrice": "17.36",
-        "targetAmount": "17.36"
-      },
-      {
-        "tradeId": "92801",
-        "account": "z41i3t",
-        "targetQuantity": "426",
-        "targetPrice": "17.36",
-        "targetAmount": "17.36"
-      },
-      {
-        "tradeId": "20953",
-        "account": "z41i3t",
-        "targetQuantity": "426",
-        "targetPrice": "17.36",
-        "targetAmount": "17.36"
-      },
-      {
-        "tradeId": "42584",
-        "account": "z41i3t",
-        "targetQuantity": "426",
-        "targetPrice": "17.36",
-        "targetAmount": "17.36"
-      }
-    ],
-    "placements": [],
-    "fills": []
-  },
-  {
-    "orderId": "45872",
-    "securityName": "FCB",
-    "securityId": "58198",
-    "targetPrice": 34.3,
-    "targetAmount": "34.3",
-    "manager": "Georgy Miklem",
-    "trader": "Antony Neat",
-    "tradeDate": "03/03/2021",
-    "account": "o96w1n",
-    "status": "WORKING",
-    "broker": "AMAB",
-    "securityType": "CB",
-    "transactionType": "SELL",
-    "createDate": "02/08/2021",
-    "targetQuantity": 861,
-    "allocations": [
-      {
-        "tradeId": "35347",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "79633",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "49446",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "64858",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "38104",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "84642",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "61581",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "96936",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "80825",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      },
-      {
-        "tradeId": "96831",
-        "account": "o96w1n",
-        "targetQuantity": "861",
-        "targetPrice": "34.3",
-        "targetAmount": "34.3"
-      }
-    ],
-    "placements": [],
-    "fills": []
+    "transactionType": "BUYL",
+    "duration": "FOK",
+    "instruction": "LIM",
+    "limit": ""
   }
 ]

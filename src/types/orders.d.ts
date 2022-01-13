@@ -5,6 +5,9 @@ export interface OrderContext extends Context {
 
 
 export interface Order {
+  limit: ReactNode;
+  instruction: ReactNode;
+  duration: ReactNode;
   appName: string,
   destinationApp: string,
   orderId: string | number,
@@ -18,7 +21,7 @@ export interface Order {
   tradeDate: string | Date,
   settlementDate: string | Date;
   account: string,
-  status: "NEW", "WORKING", "FILLED",
+  status: "NEW" | "OPEN" | "ACCNT" | "WORKING" | "FILLED",
   executedQuantity: number | string;
   broker: string,
   securityType: string,
