@@ -1,38 +1,17 @@
-import React, { useEffect, useState } from "react";
+import { sendOrderToCombinedApp } from "../hooks/useOrders";
+import { Order } from "../types/orders";
 
-export type MenuProps = JSX.IntrinsicAttributes & {
-  show: boolean;
-  position: { x: number; y: number };
-};
-
-export default function Menu({
-  show = false,
-  position,
-}: {
-  show: boolean;
-  position: { x: number; y: number };
-}) {
-  const [isVisible, setIsVisible] = useState(show);
-  useEffect(() => {
-    setIsVisible(show);
-    console.log(show);
-    console.log(position);
-  }, [position, show]);
+export default function Menu({ order }: { order: Order }) {
   return (
-    <div
-      style={{
-        display: isVisible ? "block" : "none",
-        left: position.x,
-        top: position.y,
-        zIndex: 1,
-        position: "absolute",
-      }}
-      onMouseLeave={() => setIsVisible(false)}
-    >
+    <div id="menu">
       <ul>
-        <li>1</li>
-        <li>2</li>
-        <li>3</li>
+        <li
+          onClick={() => {
+            order && sendOrderToCombinedApp(order);
+          }}
+        >
+          Send Order
+        </li>
       </ul>
     </div>
   );

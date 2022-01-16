@@ -5,12 +5,13 @@ import { Order } from "../types/orders";
 import useOrders from "../hooks/useOrders";
 import { shuffle } from "../utils";
 import { OrderForm } from "../components/OrderForm";
-import Menu, { MenuProps } from "../components/Menu";
+import Menu from "../components/Menu";
+import ContextMenu from "../components/ContextMenu";
 
 export default function CRD() {
   const appName = "CRD";
 
-  const { orders } = useOrders({
+  const { orders, addOrder } = useOrders({
     defaultValue: shuffle(data) as Order[],
     appName,
   });
@@ -22,9 +23,13 @@ export default function CRD() {
         title="CRD"
         appCSS="crd"
         orders={orders as Order[]}
-        menu={(props: MenuProps) => <Menu {...props} />}
+        menu={(props) => (
+          <ContextMenu>
+            <Menu {...props} />
+          </ContextMenu>
+        )}
       >
-        <OrderForm appName={appName} />
+        <OrderForm appName={appName} addOrder={addOrder} />
       </Blotter>
     </>
   );

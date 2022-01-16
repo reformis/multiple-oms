@@ -3,6 +3,7 @@ import { Order, OrderContext } from '../types/orders';
 import useOrders from '../hooks/useOrders';
 import { useEffect } from 'react';
 import { addContextListener, getOrCreateChannel } from "@finos/fdc3";
+import * as FSBL from "@finsemble/finsemble-core";
 
 export default function MUREX() {
   const appName = "combined";
@@ -21,14 +22,33 @@ export default function MUREX() {
         // if (context.order.appName !== "combined" && context.order.appName === appName) return;
 
         console.log(context.order);
-        context.order.status = "WORKING";
+        context.order.status = "NEW";
         addOrder(context.order);
+
+        // send a notification
+        if (window.FSBL) {
+          FSBL.Clients.NotificationClient.notify({
+            // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
+            // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
+            // type: "configDefinedType", // Types defined in the config will have those values set as default
+            source: "Finsemble", // Where the Notification was sent from
+            title: `New Order from ${context.order.appName}`,
+            details: `${context.order.ticker} at ${context.order.targetAmount}`,
+            // headerLogo: "URL to Icon",
+            // actions: [], // Note this has no Actions making it Informational
+            // meta: {} // Use the meta object to send any extra data needed in the notification payload
+          });
+        }
       }
     );
     return () => {
       listener.unsubscribe();
     };
   }, [addOrder, appName]);
+
+  useEffect(() => {
+    return () => {};
+  }, [orders]);
 
   // useEffect(() => {
   //   const setUpChannelListener = async () => {

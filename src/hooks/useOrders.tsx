@@ -15,7 +15,7 @@ export default function useOrders(props: Props) {
   const [orders, dispatch] = useImmerReducer((draft, action) => {
     switch (action.type) {
       case "add":
-        draft.push(action.order);
+        draft.unshift(action.order);
         break;
 
       case "fill":

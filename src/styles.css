@@ -226,3 +226,34 @@ form button {
   width: 50%;
   margin: 0 auto;
 }
+
+.menu-container {
+  z-index: 1;
+  position: absolute;
+}
+
+#menu{
+ background: var(--page-bg);
+  border: 1px solid var(--font-color);
+  color: var(--font-color);
+  width: 150px;
+  display: inline-flex;
+  align-content: space-between;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+#menu > ul {
+  cursor: pointer;
+  display: inline;
+}
+
+#menu > ul li {
+  list-style: none;
+  cursor: pointer;
+}
+
+#menu li:hover {
+  font-weight: 600;
+}

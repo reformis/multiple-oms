@@ -2,7 +2,6 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getRandomIntInclusive } from "../utils";
-import { broadcast } from "@finos/fdc3";
 
 const SignupSchema = Yup.object().shape({
   orderId: Yup.string().required("Required"),
@@ -87,7 +86,13 @@ const SelectField = ({
   </div>
 );
 
-export function OrderForm({ appName }: { appName: string }) {
+export function OrderForm({
+  appName,
+  addOrder,
+}: {
+  appName: string;
+  addOrder: Function;
+}) {
   return (
     <div>
       <Formik
@@ -110,7 +115,7 @@ export function OrderForm({ appName }: { appName: string }) {
           };
 
           // add the order to state
-          // broadcast the order to combined blotter
+          addOrder(order);
           console.log(order);
         }}
       >

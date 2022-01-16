@@ -1,18 +1,10 @@
-import { broadcast } from '@finos/fdc3';
-
-import { Order } from '../types/orders';
-import "../styles.css"
-import {
-  ReactComponentElement,
-  ReactElement,
-  ReactNode,
-  SyntheticEvent,
-  useState,
-} from "react";
-import { MenuProps } from "./Menu";
+import { Order } from "../types/orders";
+import "../styles.css";
+import { ReactNode, useState } from "react";
 
 interface Props {
-  menu(props: MenuProps): ReactNode;
+  // menu?({ order }: { order: Order }): ReactNode;
+  menu?: ({ order }: { order: Order }) => ReactNode;
   orders: Array<Order>;
   appCSS: string;
   title: string;
@@ -23,19 +15,11 @@ interface Props {
 export default function Blotter(props: Props) {
   const { orders, appCSS, title, appName } = props;
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [menuIsVisible, setMenuIsVisible] = useState(false);
-
-  const showMenu = (order: Order, event: React.MouseEvent<HTMLElement>) => {
-    // broadcast({ type: "finsemble.order", order: { ...order, appName } });
-    setPosition({ x: event.pageX, y: event.pageY });
-    setMenuIsVisible(true);
-    console.log(event);
-  };
+  const [currentOrder, setCurrentOrder] = useState<Order>();
 
   return (
     <div className={`${appCSS} App`}>
-      {props.menu({ show: menuIsVisible, position })}
+      {props.menu && currentOrder && props.menu({ order: currentOrder })}
       <header className="App-header">{title}</header>
       {props.children}
       <table>
@@ -66,12 +50,7 @@ export default function Blotter(props: Props) {
         </thead>
         <tbody>
           {orders.map((item) => (
-            <tr
-              key={item.orderId}
-              onClick={(event) => {
-                showMenu(item, event);
-              }}
-            >
+            <tr key={item.orderId} onClick={() => setCurrentOrder(item)}>
               <td>{item.orderId}</td>
               <td>{item.ticker}</td>
               <td>{item.securityId}</td>
@@ -92,7 +71,7 @@ export default function Blotter(props: Props) {
               <td
                 style={{
                   color:
-                    item.transactionType === "SELL"
+                    item.transactionType === "SELLL"
                       ? "var(--CLOSED)"
                       : "var(--OPEN)",
                 }}
@@ -110,9 +89,6 @@ export default function Blotter(props: Props) {
   );
 }
 
-
-
-
 /**
  * Full exection:
  * On the combined blotter :
@@ -122,10 +98,8 @@ export default function Blotter(props: Props) {
  * - when done can click a done button and will remove the order from the combined blotter but not the other OMS
  */
 
-
 /**
  * notifications:
  * - order arrives into combined suggesters
  * - something is greater or less than the limit
  */
-
