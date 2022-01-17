@@ -44,31 +44,6 @@ export default function useOrders(props: Props) {
     [dispatch, orders]
   );
 
-  // TODO: move this logic into individual blotters
-  // automatically subscribe to any context being sent - for linker selecting (user led)
-  useEffect(() => {
-    // const listener = addContextListener(
-    //   "finsemble.order",
-    //   (context: OrderContext) => {
-    //     console.log(context?.order?.appName, appName);
-
-    //     if (!context.order) return;
-
-    //     // only add orders if they come from a different app or if they come from the Combined blotter
-    //     if (
-    //       context.order.appName !== "combined" &&
-    //       context.order.appName === appName
-    //     )
-    //       return;
-
-    //     console.log(context.order);
-    //     addOrder(context.order);
-    //   }
-    // );
-    return () => {
-      // listener.unsubscribe();
-    };
-  }, [addOrder, appName]);
 
   /**
    * Notifications:
