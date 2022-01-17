@@ -16,7 +16,10 @@ import { Order, OrderContext } from "../types/orders";
 export default function Combined() {
   const appName = "combined";
 
-  const { orders, addOrder } = useOrders({ defaultValue: [], appName });
+  const { orders, addOrder, updateFill } = useOrders({
+    defaultValue: [],
+    appName,
+  });
 
   const [selectedOrders, setSelectedOrders] = useImmer<Order[]>([]);
 
@@ -55,10 +58,6 @@ export default function Combined() {
       listener.unsubscribe();
     };
   }, [addOrder, appName]);
-
-  useEffect(() => {
-    return () => {};
-  }, [orders]);
 
   // useEffect(() => {
   //   const setUpChannelListener = async () => {
@@ -108,7 +107,13 @@ export default function Combined() {
         <ContextMenu>
           <div id="menu">
             <ul>
-              <li onClick={() => {}}>Execute Order</li>
+              <li
+                onClick={() => {
+                  updateFill(props.order);
+                }}
+              >
+                Execute Order
+              </li>
             </ul>
           </div>
         </ContextMenu>
