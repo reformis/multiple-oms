@@ -3,7 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getRandomIntInclusive } from "../utils";
 
-const SignupSchema = Yup.object().shape({
+const SignUpSchema = Yup.object().shape({
   orderId: Yup.string().required("Required"),
   ticker: Yup.string().required("Required"),
   targetPrice: Yup.string().required("Required"),
@@ -86,20 +86,30 @@ const SelectField = ({
   </div>
 );
 
+const CloseButton = ({ hideForm }: { hideForm: () => void }) => (
+  <button onClick={hideForm}>X</button>
+);
+
+/**
+ * Main Order Form
+ * @param param0
+ * @returns
+ */
 export function OrderForm({
   appName,
   addOrder,
+  hideForm,
 }: {
   appName: string;
   addOrder: Function;
+  hideForm: () => void;
 }) {
   return (
     <div>
       <Formik
         initialValues={initialValues}
-        validationSchema={SignupSchema}
-        onSubmit={(values) => {
-          console.log(values);
+        validationSchema={SignUpSchema}
+        onSubmit={(values, actions) => {
           let date = new Date(values.tradeDate);
           date.setDate(date.getDate() + 2);
           const settlementDate = date.toISOString().split("T")[0];
@@ -117,9 +127,21 @@ export function OrderForm({
           // add the order to state
           addOrder(order);
           console.log(order);
+
+          actions.setSubmitting(false);
+          actions.resetForm({
+            values: {
+              ...initialValues,
+              orderId: getRandomIntInclusive(1000, 5000),
+            },
+            // you can also set the other form states here
+          });
+
+          hideForm();
         }}
       >
         <Form>
+          <CloseButton hideForm={hideForm} />
           <TextInputField
             name="orderId"
             label="Order ID"

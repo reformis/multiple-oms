@@ -2,24 +2,35 @@ import { Order } from "../types/orders";
 import "../styles.css";
 import { ReactNode, useState } from "react";
 
+
+/**
+ * Full execution:
+ * On the combined blotter :
+ * - execute button
+ *  - toggle to execute multiple
+ *  - the OMS it came from executes and the same time as the combine blotter
+ * - when done can click a done button and will remove the order from the combined blotter but not the other OMS
+ */
 interface Props {
-  // menu?({ order }: { order: Order }): ReactNode;
-  menu?: ({ order }: { order: Order }) => ReactNode;
-  orders: Array<Order>;
   appCSS: string;
-  title: string;
   appName: string;
   children?: ReactNode;
+  menu?: ({ order }: { order: Order }) => ReactNode;
+  orders: Array<Order>;
+  rowClickAction?: Function;
+  title: string;
+  selectedOrders?: Order[];
 }
 
+
 export default function Blotter(props: Props) {
-  const { orders, appCSS, title, appName } = props;
+  const { orders, appCSS, title, appName, menu, rowClickAction, selectedOrders } = props;
 
   const [currentOrder, setCurrentOrder] = useState<Order>();
 
   return (
     <div className={`${appCSS} App`}>
-      {props.menu && currentOrder && props.menu({ order: currentOrder })}
+      {menu && currentOrder && menu({ order: currentOrder })}
       <header className="App-header">{title}</header>
       {props.children}
       <table>
@@ -50,7 +61,20 @@ export default function Blotter(props: Props) {
         </thead>
         <tbody>
           {orders.map((item) => (
-            <tr key={item.orderId} onClick={() => setCurrentOrder(item)}>
+            <tr
+              key={item.orderId}
+              onClick={() => {
+                // only do the action when there is a rowClickAction
+                rowClickAction && rowClickAction(item);
+              }}
+              onContextMenu={() => {
+                //only send the order if there is a context menu (contextMenu is a right click)
+                menu && setCurrentOrder(item);
+              }}
+              style={{
+                backgroundColor: selectedOrders?.find(({ orderId }) => orderId === item.orderId) && 'red'
+              }}
+            >
               <td>{item.orderId}</td>
               <td>{item.ticker}</td>
               <td>{item.securityId}</td>
@@ -88,18 +112,3 @@ export default function Blotter(props: Props) {
     </div>
   );
 }
-
-/**
- * Full exection:
- * On the combined blotter :
- * - execute button
- *  - toggle to execute multiple
- *  - the OMS it came from executes and the same time as the combine blotter
- * - when done can click a done button and will remove the order from the combined blotter but not the other OMS
- */
-
-/**
- * notifications:
- * - order arrives into combined suggesters
- * - something is greater or less than the limit
- */

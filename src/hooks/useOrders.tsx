@@ -1,8 +1,7 @@
-import { addContextListener, broadcast } from "@finos/fdc3";
+import { broadcast } from "@finos/fdc3";
 import { useCallback, useEffect } from "react";
 import { useImmerReducer } from "use-immer";
-import { Order, OrderContext } from "../types/orders";
-import { getRandomIntInclusive } from "../utils";
+import { Order } from "../types/orders";
 
 interface Props {
   defaultValue: Order[];
@@ -20,9 +19,10 @@ export default function useOrders(props: Props) {
 
       case "fill":
         //From the order get a placement remove it from the placements array and move it to the fills array
-        const orderFillIndex = draft.findIndex(
-          (order) => order.orderId === action.orderId
-        );
+        // const orderFillIndex = draft.findIndex(
+        //   (order) => order.orderId === action.orderId
+        // );
+
         break;
       default:
         console.warn("no action taken - order reducer");

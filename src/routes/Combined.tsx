@@ -1,14 +1,24 @@
-import Blotter from '../components/Blotter';
-import { Order, OrderContext } from '../types/orders';
-import useOrders from '../hooks/useOrders';
-import { useEffect } from 'react';
-import { addContextListener, getOrCreateChannel } from "@finos/fdc3";
+import { addContextListener } from "@finos/fdc3";
 import * as FSBL from "@finsemble/finsemble-core";
+import { useCallback, useEffect } from "react";
+import { useImmer } from "use-immer";
+import Blotter from "../components/Blotter";
+import ContextMenu from "../components/ContextMenu";
+import useOrders from "../hooks/useOrders";
+import { Order, OrderContext } from "../types/orders";
 
-export default function MUREX() {
+/**
+ * notifications:
+ * - order arrives into combined suggesters
+ * - something is greater or less than the limit
+ */
+
+export default function Combined() {
   const appName = "combined";
 
   const { orders, addOrder } = useOrders({ defaultValue: [], appName });
+
+  const [selectedOrders, setSelectedOrders] = useImmer<Order[]>([]);
 
   useEffect(() => {
     const listener = addContextListener(
@@ -70,12 +80,39 @@ export default function MUREX() {
   //   }
   // }, [addOrder])
 
+  const addSelectedOrder = useCallback(
+    (order: Order) => {
+      setSelectedOrders((draft) => {
+        const index = draft.findIndex((o) => o && o.orderId === order.orderId);
+        // we want to have the ability to select and deselect items from the blotter. If the item exists we remove it and if not we add it.
+
+        if (index !== -1) {
+          draft.splice(index, 1);
+        } else {
+          draft.push(order);
+        }
+      });
+    },
+    [setSelectedOrders]
+  );
+
   return (
     <Blotter
-      appName={appName}
-      title="Combined"
       appCSS="combined"
+      appName={appName}
       orders={orders as Order[]}
+      rowClickAction={addSelectedOrder}
+      selectedOrders={selectedOrders}
+      title="Combined"
+      menu={(props) => (
+        <ContextMenu>
+          <div id="menu">
+            <ul>
+              <li onClick={() => {}}>Execute Order</li>
+            </ul>
+          </div>
+        </ContextMenu>
+      )}
     />
   );
 }

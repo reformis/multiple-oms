@@ -5,26 +5,26 @@ export interface OrderContext extends Context {
 
 
 export interface Order {
+  account: string;
   appName?: string;
+  broker: string;
   destinationApp?: string;
-  limit: string;
-  instruction: string;
   duration: string;
+  executedQuantity: number | string;
+  instruction: string;
+  limit: string;
+  manager: string;
   orderId: string | number;
-  ticker: string;
   securityId: string | number;
+  securityType: string;
+  settlementDate: string | Date;
+  status: "NEW" | "OPEN" | "ACCNT" | "WORKING" | "FILLED";
+  targetAmount: string | number;
   targetPrice: string | number;
   targetQuantity: string | number;
-  targetAmount: string | number;
-  manager: string;
-  trader: string;
+  ticker: string;
   tradeDate: string | Date;
-  settlementDate: string | Date;
-  account: string;
-  status: "NEW" | "OPEN" | "ACCNT" | "WORKING" | "FILLED";
-  executedQuantity: number | string;
-  broker: string;
-  securityType: string;
+  trader: string;
   transactionType: "BUYL" | "SELLL";
 }
 
