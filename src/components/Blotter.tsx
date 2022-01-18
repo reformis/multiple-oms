@@ -1,7 +1,6 @@
-import { Order } from "../types/orders";
-import "../styles.css";
 import { ReactNode, useState } from "react";
-
+import "../styles.css";
+import { Order } from "../types/orders";
 
 /**
  * Full execution:
@@ -12,30 +11,37 @@ import { ReactNode, useState } from "react";
  * - when done can click a done button and will remove the order from the combined blotter but not the other OMS
  */
 interface Props {
-  appCSS: string;
   appName: string;
+  checkboxAction?: Function;
   children?: ReactNode;
   menu?: ({ order }: { order: Order }) => ReactNode;
   orders: Array<Order>;
+  rowCheckbox?: boolean;
   rowClickAction?: Function;
-  title: string;
   selectedOrders?: Order[];
 }
 
-
 export default function Blotter(props: Props) {
-  const { orders, appCSS, title, appName, menu, rowClickAction, selectedOrders } = props;
+  const {
+    appName,
+    checkboxAction,
+    menu,
+    orders,
+    rowCheckbox = false,
+    rowClickAction,
+    selectedOrders,
+  } = props;
 
   const [currentOrder, setCurrentOrder] = useState<Order>();
 
   return (
-    <div className={`${appCSS} App`}>
-      {menu && currentOrder && menu({ order: currentOrder })}
-      <header className="App-header">{title}</header>
+    <div>
+      {menu && currentOrder && menu({ order: { ...currentOrder, appName } })}
       {props.children}
       <table>
         <thead>
           <tr>
+            {rowCheckbox && <th></th>}
             <th>Order ID</th>
             <th>Ticker</th>
             <th>Security ID</th>
@@ -66,15 +72,28 @@ export default function Blotter(props: Props) {
               onClick={() => {
                 // only do the action when there is a rowClickAction
                 rowClickAction && rowClickAction(item);
+                // add a FDC3Broadcast here
               }}
               onContextMenu={() => {
                 //only send the order if there is a context menu (contextMenu is a right click)
                 menu && setCurrentOrder(item);
               }}
               style={{
-                backgroundColor: selectedOrders?.find(({ orderId }) => orderId === item.orderId) && 'red'
+                backgroundColor:
+                  selectedOrders?.find(
+                    ({ orderId }) => orderId === item.orderId
+                  ) && "rgb(181 255 176 / 55%)",
               }}
             >
+              {rowCheckbox && (
+                <td>
+                  <input
+                    type="checkbox"
+                    name="selectRow"
+                    onChange={() => checkboxAction && checkboxAction(item)}
+                  ></input>
+                </td>
+              )}
               <td>{item.orderId}</td>
               <td>{item.ticker}</td>
               <td>{item.securityId}</td>

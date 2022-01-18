@@ -1,3 +1,4 @@
+import { broadcast } from "@finos/fdc3";
 import { useState } from "react";
 import Blotter from "../components/Blotter";
 import ContextMenu from "../components/ContextMenu";
@@ -17,6 +18,7 @@ interface Props {
 
 export default function OMS(props: Props) {
   const { appName, appCSS, title } = props;
+  // Holds all the state and logic for the orders
   const { orders, addOrder } = useOrders({
     defaultValue: shuffle(data) as Order[],
     appName,
@@ -24,29 +26,45 @@ export default function OMS(props: Props) {
 
   const [orderFormIsVisible, setOrderFormIsVisible] = useState(false);
 
+  // display either the order button or the order form
+  const NewOrder = () =>
+    !orderFormIsVisible ? (
+      <NewOrderButton showForm={() => setOrderFormIsVisible(true)} />
+    ) : (
+      <OrderForm
+        addOrder={addOrder}
+        appName={appName}
+        hideForm={() => setOrderFormIsVisible(false)}
+      />
+    );
+
+  const Title = () => <header className="App-header">{title}</header>;
+
+  const SendOrderMenu = (props: JSX.IntrinsicAttributes & { order: Order }) => (
+    <ContextMenu>
+      <Menu {...props} />
+    </ContextMenu>
+  );
+
+  const broadcastTicker = (order: Order) => {
+    broadcast({
+      type: "fdc3.instrument",
+      id: {
+        ticker: order.ticker,
+      },
+    });
+  };
+
   return (
-    <>
+    <div className={`${appCSS} App`}>
+      <Title />
+      <NewOrder />
       <Blotter
-        appCSS={appCSS}
         appName={appName}
         orders={orders as Order[]}
-        title={title}
-        menu={(props) => (
-          <ContextMenu>
-            <Menu {...props} />
-          </ContextMenu>
-        )}
-      >
-        {!orderFormIsVisible ? (
-          <NewOrderButton showForm={() => setOrderFormIsVisible(true)} />
-        ) : (
-          <OrderForm
-            addOrder={addOrder}
-            appName={appName}
-            hideForm={() => setOrderFormIsVisible(false)}
-          />
-        )}
-      </Blotter>
-    </>
+        menu={SendOrderMenu}
+        rowClickAction={broadcastTicker}
+      ></Blotter>
+    </div>
   );
 }

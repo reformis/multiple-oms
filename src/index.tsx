@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import './index.css';
-import BBAIM from './routes/BBAIM';
-import CRD from './routes/CRD';
 import reportWebVitals from './reportWebVitals';
-import { Routes, Route, BrowserRouter } from "react-router-dom";
-import MUREX from './routes/MUREX';
+import BBAIM from './routes/BBAIM';
 import Combined from './routes/Combined';
+import CRD from './routes/CRD';
+import MUREX from './routes/MUREX';
 
 
 const load = () => ReactDOM.render(
@@ -24,6 +24,7 @@ const load = () => ReactDOM.render(
   document.getElementById('root')
 )
 
+// TODO: swap this out for the FDC3 ready pattern. This is only used when developing using the web extension
 function init() {
   if (window.fdc3) {
     load()

@@ -1,7 +1,7 @@
-import { broadcast } from "@finos/fdc3";
-import { useCallback } from "react";
+import { broadcast, getOrCreateChannel } from "@finos/fdc3";
+import { useCallback, useEffect } from "react";
 import { useImmerReducer } from "use-immer";
-import { Order } from "../types/orders";
+import { Order, OrderContext } from "../types/orders";
 
 interface Props {
   defaultValue: Order[];
@@ -9,14 +9,19 @@ interface Props {
 }
 
 export default function useOrders(props: Props) {
-  const { defaultValue } = props;
+  const { defaultValue, appName } = props;
 
   const [orders, dispatch] = useImmerReducer((draft, action) => {
     switch (action.type) {
       case "add":
         draft.unshift(action.order);
         break;
-
+      case "delete":
+        draft.splice(action.orderIndex, 1);
+        break;
+      case "update":
+        draft.splice(action.orderIndex, 1);
+        break;
       case "fill":
         //From the order get a placement remove it from the placements array and move it to the fills array
         const orderFillIndex = draft.findIndex(
@@ -51,21 +56,43 @@ export default function useOrders(props: Props) {
     [dispatch, orders]
   );
 
+  const deleteOrder = useCallback(
+    (order: Order) => {
+      const orderIndex = orders.findIndex((o) => o.orderId === order.orderId);
+      dispatch({
+        type: "delete",
+        orderIndex,
+      });
+    },
+    [dispatch, orders]
+  );
+
   const updateFill = useCallback(
     (order: Order) => {
-      const { targetAmount } = order;
+      const { targetQuantity, status } = order;
 
-      const xPercent = Number(targetAmount) * 0.25;
+      const xPercent = Number(targetQuantity) * 0.25;
+
+      broadcast({
+        type: "finsemble.order",
+        order: order,
+      });
 
       const fillOrder = (amount: number) => {
         let fillAmount = amount + xPercent;
 
-        if (fillAmount > targetAmount) {
+        if (fillAmount > targetQuantity || status === "FILLED") {
           dispatch({
             type: "fill",
             orderId: order.orderId,
             status: "FILLED",
           });
+
+          // broadcast({
+          //   type: "finsemble.order",
+          //   order: { ...order },
+          // });
+          return;
         }
 
         setTimeout(() => {
@@ -89,11 +116,32 @@ export default function useOrders(props: Props) {
    * If the draft state is !filled and the new state == filled then send Notification.
    *
    */
+  useEffect(() => {
+    const setUpChannelListener = async () => {
+      const channel = await getOrCreateChannel("orders");
+      const listener = channel.addContextListener(
+        "finsemble.order",
+        (context: OrderContext) => {
+          // only add orders if they come from a different app or if they come from the Combined blotter
+          if (!context.order || context?.order?.appName !== "combined") return;
+
+          addOrder(context.order);
+        }
+      );
+      return listener;
+    };
+
+    const channelListener = setUpChannelListener();
+    return () => {
+      channelListener.then((listener) => listener.unsubscribe());
+    };
+  }, [addOrder]);
 
   return {
     orders,
     addOrder,
     updateFill,
+    deleteOrder,
   };
 }
 

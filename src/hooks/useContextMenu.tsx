@@ -1,5 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
-//TODO: this could be replaced with onContextMenu event
+
+/**
+ * This handles all the logic of the right click menu to show.
+ * This should not need to be changed
+ */
 export const useContextMenu = () => {
   const [xPos, setXPos] = useState("0px");
   const [yPos, setYPos] = useState("0px");

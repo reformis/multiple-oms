@@ -233,23 +233,25 @@ form button {
 }
 
 #menu{
- background: var(--page-bg);
+  background: #ffffff;
   border: 1px solid var(--font-color);
   color: var(--font-color);
-  width: 150px;
-  display: inline-flex;
-  align-content: space-between;
-  justify-content: space-between;
-  flex-wrap: nowrap;
-  align-items: center;
+  min-height: 26px;
+  /* width: 100px; */
+  /* display: inline-flex; */
+  /* align-content: space-between; */
+  /* justify-content: space-between; */
+  /* flex-wrap: nowrap; */
+  /* align-items: center; */
 }
 
 #menu > ul {
   cursor: pointer;
-  display: inline;
+  display: contents;
 }
 
 #menu > ul li {
+  padding: 2px 20px;
   list-style: none;
   cursor: pointer;
 }
