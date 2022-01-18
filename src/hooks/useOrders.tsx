@@ -20,7 +20,10 @@ export default function useOrders(props: Props) {
         draft.splice(action.orderIndex, 1);
         break;
       case "update":
-        draft.splice(action.orderIndex, 1);
+        const index = draft.findIndex(
+          (order) => order.orderId === action.order.orderId
+        );
+        if (index !== -1) draft[index] = action.order;
         break;
       case "fill":
         //From the order get a placement remove it from the placements array and move it to the fills array
@@ -54,6 +57,16 @@ export default function useOrders(props: Props) {
       });
     },
     [dispatch, orders]
+  );
+
+  const updateOrder = useCallback(
+    (updatedOrder: Order) => {
+      dispatch({
+        type: "update",
+        order: updatedOrder,
+      });
+    },
+    [dispatch]
   );
 
   const deleteOrder = useCallback(
@@ -142,6 +155,7 @@ export default function useOrders(props: Props) {
     addOrder,
     updateFill,
     deleteOrder,
+    updateOrder,
   };
 }
 
