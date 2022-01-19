@@ -14,23 +14,27 @@ export default function Combined() {
     appName,
   });
 
-  useOrderEvents({ addOrder, updateFill, deleteOrder });
+  useOrderEvents({ addOrder, updateFill, deleteOrder, appName });
 
   const [selectedOrders, setSelectedOrders] = useImmer<Order[]>([]);
 
   useEffect(() => {
     // send a notification
     if (orders.length && window.FSBL) {
-      FSBL.Clients.NotificationClient.notify({
-        // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
-        // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
-        // type: "configDefinedType", // Types defined in the config will have those values set as default
-        source: "Finsemble", // Where the Notification was sent from
-        title: `New Order from ${orders[0].appName}`,
-        details: `${orders[0].ticker} at ${orders[0].targetAmount}`,
-        // headerLogo: "URL to Icon",
-        // actions: [], // Note this has no Actions making it Informational
-        // meta: {} // Use the meta object to send any extra data needed in the notification payload
+      orders.forEach((order) => {
+        if (order.status !== "NEW") return;
+
+        FSBL.Clients.NotificationClient.notify({
+          // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
+          // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
+          // type: "configDefinedType", // Types defined in the config will have those values set as default
+          source: "Finsemble", // Where the Notification was sent from
+          title: `New Order from ${orders[0].appName}`,
+          details: `${orders[0].ticker} at ${orders[0].targetAmount}`,
+          // headerLogo: "URL to Icon",
+          // actions: [], // Note this has no Actions making it Informational
+          // meta: {} // Use the meta object to send any extra data needed in the notification payload
+        });
       });
     }
   }, [orders]);
@@ -63,10 +67,15 @@ export default function Combined() {
         selectedOrders.forEach((order) => {
           broadcast({
             type: "finsemble.order",
-            order: { ...order, status: "WORKING" },
+            order: {
+              ...order,
+              status: "WORKING",
+              destinationApp: order.appName,
+              appName,
+            },
             action: actions.FILL,
           });
-          // updateFill(order);
+          updateFill(order);
         });
       }}
     >

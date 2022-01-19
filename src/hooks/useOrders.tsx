@@ -50,8 +50,12 @@ export default function useOrders(props: Props) {
   const addOrder = useCallback(
     (newOrder: Order) => {
       // check to make sure it's not already in the orders before we try and add it
-      const index = orders.find((order) => newOrder.orderId === order.orderId);
-      //TODO: do we want to allow duplicates for the combined blotter?
+      const index = orders.find(
+        (order) =>
+          newOrder.orderId === order.orderId &&
+          newOrder.appName === order.appName
+      );
+
       if (index) return;
 
       dispatch({
@@ -87,13 +91,14 @@ export default function useOrders(props: Props) {
     (order: Order) => {
       const { targetQuantity, status } = order;
 
-      if (appName === "combined" || order.appName === appName) {
+      // only fill if thee message comes from combined or the destination app matches the app name
+      if (appName === "combined" || order.destinationApp === appName) {
         const xPercent = Number(targetQuantity) * 0.25;
 
         const fillOrder = (amount: number) => {
           let fillAmount = amount + xPercent;
 
-          if (fillAmount > targetQuantity || status === "FILLED") {
+          if (fillAmount >= targetQuantity || status === "FILLED") {
             dispatch({
               type: "fill",
               orderId: order.orderId,
@@ -133,19 +138,17 @@ interface UseOrderProps {
   addOrder?: (newOrder: Order) => void;
   deleteOrder?: (newOrder: Order) => void;
   updateFill?: (newOrder: Order) => void;
+  appName: string;
 }
 export const useOrderEvents = (props: UseOrderProps) => {
-  const { addOrder, deleteOrder, updateOrder, updateFill } = props;
-  /**
-   * Notifications:
-   * If the draft state is !filled and the new state == filled then send Notification.
-   *
-   */
+  const { addOrder, deleteOrder, updateOrder, updateFill, appName } = props;
+
   useEffect(() => {
     const listener = addContextListener(
       "finsemble.order",
       (context: OrderContext) => {
         if (!context.order) return;
+        if (context.order.destinationApp !== appName) return;
 
         switch (context.action) {
           case actions.ADD:
@@ -171,7 +174,7 @@ export const useOrderEvents = (props: UseOrderProps) => {
     return () => {
       listener.unsubscribe();
     };
-  }, [addOrder, deleteOrder, updateFill, updateOrder]);
+  }, [addOrder, appName, deleteOrder, updateFill, updateOrder]);
 };
 
 export const actions = {

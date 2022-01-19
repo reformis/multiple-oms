@@ -24,7 +24,7 @@ export default function OMS(props: Props) {
     appName,
   });
 
-  useOrderEvents({ addOrder, updateFill, deleteOrder });
+  useOrderEvents({ addOrder, updateFill, deleteOrder, appName });
 
   // display either the order button or the order form
   const NewOrder = () => {
