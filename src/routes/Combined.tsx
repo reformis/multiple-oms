@@ -3,7 +3,7 @@ import * as FSBL from "@finsemble/finsemble-core";
 import { useCallback, useEffect } from "react";
 import { useImmer } from "use-immer";
 import Blotter from "../components/Blotter";
-import useOrders, { actions, useOrderEvents } from "../hooks/useOrders";
+import useOrders, { actions, orderContextListener } from "../hooks/useOrders";
 import { Order } from "../types/orders";
 
 export default function Combined() {
@@ -14,7 +14,17 @@ export default function Combined() {
     appName,
   });
 
-  useOrderEvents({ addOrder, updateFill, deleteOrder, appName });
+  useEffect(() => {
+    const listener = orderContextListener({
+      addOrder,
+      updateFill,
+      deleteOrder,
+      appName,
+    });
+    return () => {
+      listener.unsubscribe();
+    };
+  }, []);
 
   const [selectedOrders, setSelectedOrders] = useImmer<Order[]>([]);
 

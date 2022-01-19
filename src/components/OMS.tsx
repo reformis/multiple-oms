@@ -1,11 +1,11 @@
 import { broadcast } from "@finos/fdc3";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Blotter from "../components/Blotter";
 import ContextMenu from "../components/ContextMenu";
 import Menu from "../components/Menu";
 import NewOrderButton from "../components/NewOrderButton";
 import { OrderForm } from "../components/OrderForm";
-import useOrders, { useOrderEvents } from "../hooks/useOrders";
+import useOrders, { orderContextListener } from "../hooks/useOrders";
 import data from "../mock-data/data2.json";
 import { Order } from "../types/orders";
 import { shuffle } from "../utils";
@@ -24,7 +24,17 @@ export default function OMS(props: Props) {
     appName,
   });
 
-  useOrderEvents({ addOrder, updateFill, deleteOrder, appName });
+  useEffect(() => {
+    const listener = orderContextListener({
+      addOrder,
+      updateFill,
+      deleteOrder,
+      appName,
+    });
+    return () => {
+      listener.unsubscribe();
+    };
+  }, []);
 
   // display either the order button or the order form
   const NewOrder = () => {

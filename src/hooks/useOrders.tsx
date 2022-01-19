@@ -91,6 +91,10 @@ export default function useOrders(props: Props) {
     (order: Order) => {
       const { targetQuantity, status } = order;
 
+      if (status === "FILLED" || status === "ACCNT") {
+        console.log("ORDER has already been filled or completed");
+      }
+
       // only fill if thee message comes from combined or the destination app matches the app name
       if (appName === "combined" || order.destinationApp === appName) {
         const xPercent = Number(targetQuantity) * 0.25;
@@ -98,7 +102,7 @@ export default function useOrders(props: Props) {
         const fillOrder = (amount: number) => {
           let fillAmount = amount + xPercent;
 
-          if (fillAmount >= targetQuantity || status === "FILLED") {
+          if (fillAmount > targetQuantity || status === "FILLED") {
             dispatch({
               type: "fill",
               orderId: order.orderId,
@@ -140,41 +144,40 @@ interface UseOrderProps {
   updateFill?: (newOrder: Order) => void;
   appName: string;
 }
-export const useOrderEvents = (props: UseOrderProps) => {
+export const orderContextListener = (props: UseOrderProps) => {
   const { addOrder, deleteOrder, updateOrder, updateFill, appName } = props;
 
-  useEffect(() => {
-    const listener = addContextListener(
-      "finsemble.order",
-      (context: OrderContext) => {
-        if (!context.order) return;
-        if (context.order.destinationApp !== appName) return;
+  const listener = addContextListener(
+    "finsemble.order",
+    (context: OrderContext) => {
+      console.group();
+      console.log("context received");
+      console.log(context);
+      console.groupEnd();
+      if (!context.order) return;
+      if (context.order.destinationApp !== appName) return;
 
-        switch (context.action) {
-          case actions.ADD:
-            addOrder && addOrder(context.order);
-            break;
-          case actions.UPDATE:
-            updateOrder && updateOrder(context.order);
-            break;
-          case actions.FILL:
-            updateFill && updateFill(context.order);
-            break;
-          case actions.DELETE:
-            deleteOrder && deleteOrder(context.order);
-            break;
+      switch (context.action) {
+        case actions.ADD:
+          addOrder && addOrder(context.order);
+          break;
+        case actions.UPDATE:
+          updateOrder && updateOrder(context.order);
+          break;
+        case actions.FILL:
+          updateFill && updateFill(context.order);
+          break;
+        case actions.DELETE:
+          deleteOrder && deleteOrder(context.order);
+          break;
 
-          default:
-            console.log("no action provided in context.");
-            break;
-        }
+        default:
+          console.log("no action provided in context.");
+          break;
       }
-    );
-
-    return () => {
-      listener.unsubscribe();
-    };
-  }, [addOrder, appName, deleteOrder, updateFill, updateOrder]);
+    }
+  );
+  return listener;
 };
 
 export const actions = {
