@@ -50,8 +50,12 @@ export default function useOrders(props: Props) {
   const addOrder = useCallback(
     (newOrder: Order) => {
       // check to make sure it's not already in the orders before we try and add it
-      const index = orders.find((order) => newOrder.orderId === order.orderId);
-      //TODO: do we want to allow duplicates for the combined blotter?
+      const index = orders.find(
+        (order) =>
+          newOrder.orderId === order.orderId &&
+          newOrder.appName === order.appName
+      );
+
       if (index) return;
 
       dispatch({
@@ -87,7 +91,12 @@ export default function useOrders(props: Props) {
     (order: Order) => {
       const { targetQuantity, status } = order;
 
-      if (appName === "combined" || order.appName === appName) {
+      if (status === "FILLED" || status === "ACCNT") {
+        console.log("ORDER has already been filled or completed");
+      }
+
+      // only fill if thee message comes from combined or the destination app matches the app name
+      if (appName === "combined" || order.destinationApp === appName) {
         const xPercent = Number(targetQuantity) * 0.25;
 
         const fillOrder = (amount: number) => {
@@ -133,45 +142,42 @@ interface UseOrderProps {
   addOrder?: (newOrder: Order) => void;
   deleteOrder?: (newOrder: Order) => void;
   updateFill?: (newOrder: Order) => void;
+  appName: string;
 }
-export const useOrderEvents = (props: UseOrderProps) => {
-  const { addOrder, deleteOrder, updateOrder, updateFill } = props;
-  /**
-   * Notifications:
-   * If the draft state is !filled and the new state == filled then send Notification.
-   *
-   */
-  useEffect(() => {
-    const listener = addContextListener(
-      "finsemble.order",
-      (context: OrderContext) => {
-        if (!context.order) return;
+export const orderContextListener = (props: UseOrderProps) => {
+  const { addOrder, deleteOrder, updateOrder, updateFill, appName } = props;
 
-        switch (context.action) {
-          case actions.ADD:
-            addOrder && addOrder(context.order);
-            break;
-          case actions.UPDATE:
-            updateOrder && updateOrder(context.order);
-            break;
-          case actions.FILL:
-            updateFill && updateFill(context.order);
-            break;
-          case actions.DELETE:
-            deleteOrder && deleteOrder(context.order);
-            break;
+  const listener = addContextListener(
+    "finsemble.order",
+    (context: OrderContext) => {
+      console.group();
+      console.log("context received");
+      console.log(context);
+      console.groupEnd();
+      if (!context.order) return;
+      if (context.order.destinationApp !== appName) return;
 
-          default:
-            console.log("no action provided in context.");
-            break;
-        }
+      switch (context.action) {
+        case actions.ADD:
+          addOrder && addOrder(context.order);
+          break;
+        case actions.UPDATE:
+          updateOrder && updateOrder(context.order);
+          break;
+        case actions.FILL:
+          updateFill && updateFill(context.order);
+          break;
+        case actions.DELETE:
+          deleteOrder && deleteOrder(context.order);
+          break;
+
+        default:
+          console.log("no action provided in context.");
+          break;
       }
-    );
-
-    return () => {
-      listener.unsubscribe();
-    };
-  }, [addOrder, deleteOrder, updateFill, updateOrder]);
+    }
+  );
+  return listener;
 };
 
 export const actions = {
