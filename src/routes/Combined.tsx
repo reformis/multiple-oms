@@ -17,6 +17,7 @@ export default function Combined() {
   const [selectedOrders, setSelectedOrders] = useImmer<Order[]>([]);
 
   useEffect(() => {
+    document.title="Combined Order Blotter";
     const listener = addContextListener(
       "finsemble.order",
       (context: OrderContext) => {
@@ -93,15 +94,19 @@ export default function Combined() {
 
   return (
     <div className={`combined App`}>
-      <header className="App-header">Combined Blotter</header>
-      {selectedOrders.length > 0 ? (
+      {/* <header className="App-header">Combined Blotter</header> */}
+      {/* {selectedOrders.length > 0 ? (
         <>
           <ExecuteButton />
           <RemoveOrderButton />
         </>
       ) : (
         <></>
-      )}
+      )} */}
+       <div style={{height:'25px', backgroundColor:'white', width:'100%'}} >
+        <img src='Nuveen.png' height='25px'></img> 
+        
+      </div>
 
       <Blotter
         appName={appName}

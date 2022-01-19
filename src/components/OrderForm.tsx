@@ -158,7 +158,13 @@ export function OrderForm({
             label="Target Quantity"
             type="number"
           ></TextInputField>
-          <SelectField name="manager" label="Manager" options={[]} />
+          <SelectField name="manager" label="Manager"
+          options={[
+            { value: "Rhianna Parmenter", label: "Rhianna Parmenter" },
+            { value: "Gert Wheatland", label: "Gert Wheatland" },
+            { value: "Corty Jellard", label: "Corty Jellard" },
+            { value: "Kathie St. Ledger", label: "Kathie St. Ledger" },
+          ]} />
           <SelectField
             name="account"
             label="Account"
@@ -174,7 +180,13 @@ export function OrderForm({
               { value: "PF37363", label: "PF37363" },
             ]}
           />
-          <SelectField name="trader" label="Trader" options={[]} />
+          <SelectField name="trader" label="Trader"
+          options={[
+            { value: "Rhianna Parmenter", label: "Rhianna Parmenter" },
+            { value: "Gert Wheatland", label: "Gert Wheatland" },
+            { value: "Corty Jellard", label: "Corty Jellard" },
+            { value: "Kathie St. Ledger", label: "Kathie St. Ledger" },
+          ]}  />
           <TextInputField
             name="tradeDate"
             label="Trade Date"

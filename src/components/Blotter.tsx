@@ -34,6 +34,11 @@ export default function Blotter(props: Props) {
 
   const [currentOrder, setCurrentOrder] = useState<Order>();
 
+  const getName=(name:string)=>{
+    const nameArray= name.split(' ');
+    return nameArray[0].charAt(0) +nameArray[1];
+  }
+
   return (
     <div>
       {menu && currentOrder && menu({ order: { ...currentOrder, appName } })}
@@ -52,9 +57,9 @@ export default function Blotter(props: Props) {
             <th>Account</th>
             <th>Manager</th>
             <th>Trader</th>
-            <th>Trade Date</th>
+            <th style={{minWidth:'65px'}}>Trade Date</th>
             {/* make settlement date 2 days later */}
-            <th>Settlement Date</th>
+            <th style={{minWidth:'65px'}}>Settlement Date</th>
             <th>Status</th>
             <th>Exec Qty</th>
             <th>Broker</th>
@@ -82,7 +87,7 @@ export default function Blotter(props: Props) {
                 backgroundColor:
                   selectedOrders?.find(
                     ({ orderId }) => orderId === item.orderId
-                  ) && "rgb(181 255 176 / 55%)",
+                  ) && "#b7b7b7",
               }}
             >
               {rowCheckbox && (
@@ -101,11 +106,11 @@ export default function Blotter(props: Props) {
               <td>{item.targetQuantity}</td>
               <td>{item.targetAmount}</td>
               <td>{item.account}</td>
-              <td>{item.manager}</td>
-              <td>{item.trader}</td>
+              <td>{getName(item.manager)}</td>
+              <td>{getName(item.trader)}</td>
               <td>{item.tradeDate}</td>
               <td>{item.settlementDate}</td>
-              <td style={{ backgroundColor: `var(--${item.status})` }}>
+              <td style={{ fontWeight:'bold' }}>
                 {item.status}
               </td>
               <td>{item.executedQuantity}</td>
@@ -117,6 +122,7 @@ export default function Blotter(props: Props) {
                     item.transactionType === "SELLL"
                       ? "var(--CLOSED)"
                       : "var(--OPEN)",
+                      
                 }}
               >
                 {item.transactionType}
@@ -130,4 +136,6 @@ export default function Blotter(props: Props) {
       </table>
     </div>
   );
+
+  
 }

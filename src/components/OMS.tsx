@@ -56,9 +56,15 @@ export default function OMS(props: Props) {
   };
 
   return (
-    <div className={`${appCSS} App`}>
-      <Title />
-      <NewOrder />
+    <div>
+      <div style={{height:'25px', backgroundColor:'white', width:'100%'}} >
+        {appName==='BBAIM' ? <img src='Bloomberg.png' height='25px'></img> :  <img src='CRD2.png' height='25px'></img> }
+        
+      </div>
+      <div className={`${appCSS} App`}>
+      {/* <Title /> */}
+      {/* <NewOrder /> */}
+      
       <Blotter
         appName={appName}
         orders={orders as Order[]}
@@ -66,5 +72,7 @@ export default function OMS(props: Props) {
         rowClickAction={broadcastTicker}
       ></Blotter>
     </div>
+    </div>
+    
   );
 }

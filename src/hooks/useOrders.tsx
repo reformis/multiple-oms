@@ -86,25 +86,27 @@ export default function useOrders(props: Props) {
 
       const xPercent = Number(targetQuantity) * 0.25;
 
-      broadcast({
-        type: "finsemble.order",
-        order: order,
-      });
+      // broadcast({
+      //   type: "finsemble.order",
+      //   order:order
+        
+      // });
 
       const fillOrder = (amount: number) => {
         let fillAmount = amount + xPercent;
 
-        if (fillAmount > targetQuantity || status === "FILLED") {
+        if (fillAmount > targetQuantity || status === "READY") {
           dispatch({
             type: "fill",
             orderId: order.orderId,
-            status: "FILLED",
+            status: "READY",
           });
-
-          // broadcast({
-          //   type: "finsemble.order",
-          //   order: { ...order },
-          // });
+         
+          broadcast({
+            type: "finsemble.order",
+             //@ts-ignore
+            order: { ...order },
+          });
           return;
         }
 
@@ -113,7 +115,7 @@ export default function useOrders(props: Props) {
             type: "fill",
             orderId: order.orderId,
             executedQuantity: Math.round(fillAmount),
-            status: "WORKING",
+            status: "WORK",
           });
           fillOrder(fillAmount);
         }, 2000);
@@ -159,8 +161,9 @@ export default function useOrders(props: Props) {
   };
 }
 
-export const sendOrderToCombinedApp = (order: Order) =>
+export const sendOrderToCombinedApp = (order: Order) => 
   broadcast({
     type: "finsemble.order",
+    //@ts-ignore
     order: { ...order, destinationApp: "combined" },
   });
