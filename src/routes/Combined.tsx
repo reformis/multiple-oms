@@ -104,8 +104,9 @@ export default function Combined() {
         <></>
       )} */}
        <div style={{height:'25px', backgroundColor:'white', width:'100%'}} >
-        <img src='Nuveen.png' height='25px'></img> 
-        
+         <div style={{textAlign:'left'}}>
+         <img src='Nuveen.png' height='25px'></img> 
+         </div>
       </div>
 
       <Blotter

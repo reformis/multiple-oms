@@ -6,7 +6,7 @@ import Menu from "../components/Menu";
 import NewOrderButton from "../components/NewOrderButton";
 import { OrderForm } from "../components/OrderForm";
 import useOrders from "../hooks/useOrders";
-import data from "../mock-data/data2.json";
+import {data} from "../mock-data/data2";
 import { Order } from "../types/orders";
 import { shuffle } from "../utils";
 
@@ -15,7 +15,9 @@ interface Props {
   appName: string;
   title: string;
 }
-
+interface NewOrderProps{
+  appCSS: string;
+}
 export default function OMS(props: Props) {
   const { appName, appCSS, title } = props;
   // Holds all the state and logic for the orders
@@ -27,9 +29,9 @@ export default function OMS(props: Props) {
   const [orderFormIsVisible, setOrderFormIsVisible] = useState(false);
 
   // display either the order button or the order form
-  const NewOrder = () =>
+  const NewOrder = (props:NewOrderProps) =>
     !orderFormIsVisible ? (
-      <NewOrderButton showForm={() => setOrderFormIsVisible(true)} />
+      <NewOrderButton showForm={() => setOrderFormIsVisible(true)} appCSS={appCSS} />
     ) : (
       <OrderForm
         addOrder={addOrder}
@@ -57,14 +59,16 @@ export default function OMS(props: Props) {
 
   return (
     <div>
-      <div style={{height:'25px', backgroundColor:'white', width:'100%'}} >
-        {appName==='BBAIM' ? <img src='Bloomberg.png' height='25px'></img> :  <img src='CRD2.png' height='25px'></img> }
-        
+      <div className={`${appCSS} App-header`}>
+        <NewOrder appCSS={appCSS} />
+        {appName==='BBAIM' ? 
+        <div style={{float:'left', display: 'inline-block'}}><img src='Bloomberg.png' height='25px'  /></div>
+        :
+        <div style={{float:'left', display: 'inline-block'}}><img src='CRD2.png' height='25px'></img></div> }
       </div>
       <div className={`${appCSS} App`}>
       {/* <Title /> */}
       {/* <NewOrder /> */}
-      
       <Blotter
         appName={appName}
         orders={orders as Order[]}

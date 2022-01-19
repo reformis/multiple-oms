@@ -1,6 +1,6 @@
-[
+export const data=[
   {
-    "orderId": 1026,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "LDR",
     "securityId": 4074,
     "targetPrice": 29.14,
@@ -21,7 +21,7 @@
     "limit": ""
   },
   {
-    "orderId": 2787,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "ORBK",
     "securityId": 4202,
     "targetPrice": 75.78,
@@ -42,7 +42,7 @@
     "limit": ""
   },
   {
-    "orderId": 3223,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "AOBC",
     "securityId": 2304,
     "targetPrice": 42.73,
@@ -63,7 +63,7 @@
     "limit": ""
   },
   {
-    "orderId": 4409,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "LLNW",
     "securityId": 4947,
     "targetPrice": 10.64,
@@ -84,7 +84,7 @@
     "limit": ""
   },
   {
-    "orderId": 4770,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "RTEC",
     "securityId": 1381,
     "targetPrice": 97.28,
@@ -105,7 +105,7 @@
     "limit": ""
   },
   {
-    "orderId": 1672,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "GSL^B",
     "securityId": 1612,
     "targetPrice": 50.3,
@@ -126,7 +126,7 @@
     "limit": ""
   },
   {
-    "orderId": 2451,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "SCVL",
     "securityId": 4223,
     "targetPrice": 39.81,
@@ -147,7 +147,7 @@
     "limit": ""
   },
   {
-    "orderId": 3327,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "SINO",
     "securityId": 2595,
     "targetPrice": 43.55,
@@ -168,7 +168,7 @@
     "limit": ""
   },
   {
-    "orderId": 1065,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "DNP",
     "securityId": 3970,
     "targetPrice": 24.25,
@@ -189,7 +189,7 @@
     "limit": ""
   },
   {
-    "orderId": 2208,
+    "orderId": Math.floor(100000 + Math.random() * 900000),
     "ticker": "GTY",
     "securityId": 4659,
     "targetPrice": 76.23,
