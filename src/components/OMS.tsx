@@ -5,7 +5,7 @@ import ContextMenu from "../components/ContextMenu";
 import Menu from "../components/Menu";
 import NewOrderButton from "../components/NewOrderButton";
 import { OrderForm } from "../components/OrderForm";
-import useOrders from "../hooks/useOrders";
+import useOrders, { useOrderEvents } from "../hooks/useOrders";
 import data from "../mock-data/data2.json";
 import { Order } from "../types/orders";
 import { shuffle } from "../utils";
@@ -19,16 +19,18 @@ interface Props {
 export default function OMS(props: Props) {
   const { appName, appCSS, title } = props;
   // Holds all the state and logic for the orders
-  const { orders, addOrder } = useOrders({
+  const { orders, addOrder, deleteOrder, updateFill } = useOrders({
     defaultValue: shuffle(data) as Order[],
     appName,
   });
 
-  const [orderFormIsVisible, setOrderFormIsVisible] = useState(false);
+  useOrderEvents({ addOrder, updateFill, deleteOrder });
 
   // display either the order button or the order form
-  const NewOrder = () =>
-    !orderFormIsVisible ? (
+  const NewOrder = () => {
+    const [orderFormIsVisible, setOrderFormIsVisible] = useState(false);
+
+    return !orderFormIsVisible ? (
       <NewOrderButton showForm={() => setOrderFormIsVisible(true)} />
     ) : (
       <OrderForm
@@ -37,12 +39,13 @@ export default function OMS(props: Props) {
         hideForm={() => setOrderFormIsVisible(false)}
       />
     );
+  };
 
   const Title = () => <header className="App-header">{title}</header>;
 
-  const SendOrderMenu = (props: JSX.IntrinsicAttributes & { order: Order }) => (
+  const SendOrderMenu = ({ order }: { order: Order }) => (
     <ContextMenu>
-      <Menu {...props} />
+      <Menu order={order} />
     </ContextMenu>
   );
 

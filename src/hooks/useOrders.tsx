@@ -1,4 +1,4 @@
-import { broadcast, getOrCreateChannel } from "@finos/fdc3";
+import { addContextListener } from "@finos/fdc3";
 import { useCallback, useEffect } from "react";
 import { useImmerReducer } from "use-immer";
 import { Order, OrderContext } from "../types/orders";
@@ -31,6 +31,8 @@ export default function useOrders(props: Props) {
           (order) => order.orderId === action.orderId
         );
 
+        if (orderFillIndex === -1) return;
+
         if (action.executedQuantity) {
           draft[orderFillIndex].executedQuantity = action.executedQuantity;
         }
@@ -49,6 +51,7 @@ export default function useOrders(props: Props) {
     (newOrder: Order) => {
       // check to make sure it's not already in the orders before we try and add it
       const index = orders.find((order) => newOrder.orderId === order.orderId);
+      //TODO: do we want to allow duplicates for the combined blotter?
       if (index) return;
 
       dispatch({
@@ -84,71 +87,37 @@ export default function useOrders(props: Props) {
     (order: Order) => {
       const { targetQuantity, status } = order;
 
-      const xPercent = Number(targetQuantity) * 0.25;
+      if (appName === "combined" || order.appName === appName) {
+        const xPercent = Number(targetQuantity) * 0.25;
 
-      broadcast({
-        type: "finsemble.order",
-        order: order,
-      });
+        const fillOrder = (amount: number) => {
+          let fillAmount = amount + xPercent;
 
-      const fillOrder = (amount: number) => {
-        let fillAmount = amount + xPercent;
+          if (fillAmount > targetQuantity || status === "FILLED") {
+            dispatch({
+              type: "fill",
+              orderId: order.orderId,
+              status: "FILLED",
+            });
+            return;
+          }
 
-        if (fillAmount > targetQuantity || status === "FILLED") {
-          dispatch({
-            type: "fill",
-            orderId: order.orderId,
-            status: "FILLED",
-          });
+          setTimeout(() => {
+            dispatch({
+              type: "fill",
+              orderId: order.orderId,
+              executedQuantity: Math.round(fillAmount),
+              status: "WORKING",
+            });
+            fillOrder(fillAmount);
+          }, 2000);
+        };
 
-          // broadcast({
-          //   type: "finsemble.order",
-          //   order: { ...order },
-          // });
-          return;
-        }
-
-        setTimeout(() => {
-          dispatch({
-            type: "fill",
-            orderId: order.orderId,
-            executedQuantity: Math.round(fillAmount),
-            status: "WORKING",
-          });
-          fillOrder(fillAmount);
-        }, 2000);
-      };
-
-      fillOrder(0);
+        fillOrder(0);
+      }
     },
-    [dispatch]
+    [appName, dispatch]
   );
-
-  /**
-   * Notifications:
-   * If the draft state is !filled and the new state == filled then send Notification.
-   *
-   */
-  useEffect(() => {
-    const setUpChannelListener = async () => {
-      const channel = await getOrCreateChannel("orders");
-      const listener = channel.addContextListener(
-        "finsemble.order",
-        (context: OrderContext) => {
-          // only add orders if they come from a different app or if they come from the Combined blotter
-          if (!context.order || context?.order?.appName !== "combined") return;
-
-          addOrder(context.order);
-        }
-      );
-      return listener;
-    };
-
-    const channelListener = setUpChannelListener();
-    return () => {
-      channelListener.then((listener) => listener.unsubscribe());
-    };
-  }, [addOrder]);
 
   return {
     orders,
@@ -159,8 +128,55 @@ export default function useOrders(props: Props) {
   };
 }
 
-export const sendOrderToCombinedApp = (order: Order) =>
-  broadcast({
-    type: "finsemble.order",
-    order: { ...order, destinationApp: "combined" },
-  });
+interface UseOrderProps {
+  updateOrder?: (newOrder: Order) => void;
+  addOrder?: (newOrder: Order) => void;
+  deleteOrder?: (newOrder: Order) => void;
+  updateFill?: (newOrder: Order) => void;
+}
+export const useOrderEvents = (props: UseOrderProps) => {
+  const { addOrder, deleteOrder, updateOrder, updateFill } = props;
+  /**
+   * Notifications:
+   * If the draft state is !filled and the new state == filled then send Notification.
+   *
+   */
+  useEffect(() => {
+    const listener = addContextListener(
+      "finsemble.order",
+      (context: OrderContext) => {
+        if (!context.order) return;
+
+        switch (context.action) {
+          case actions.ADD:
+            addOrder && addOrder(context.order);
+            break;
+          case actions.UPDATE:
+            updateOrder && updateOrder(context.order);
+            break;
+          case actions.FILL:
+            updateFill && updateFill(context.order);
+            break;
+          case actions.DELETE:
+            deleteOrder && deleteOrder(context.order);
+            break;
+
+          default:
+            console.log("no action provided in context.");
+            break;
+        }
+      }
+    );
+
+    return () => {
+      listener.unsubscribe();
+    };
+  }, [addOrder, deleteOrder, updateFill, updateOrder]);
+};
+
+export const actions = {
+  UPDATE: "update",
+  DELETE: "delete",
+  ADD: "add",
+  FILL: "fill",
+};

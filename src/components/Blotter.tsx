@@ -72,7 +72,6 @@ export default function Blotter(props: Props) {
               onClick={() => {
                 // only do the action when there is a rowClickAction
                 rowClickAction && rowClickAction(item);
-                // add a FDC3Broadcast here
               }}
               onContextMenu={() => {
                 //only send the order if there is a context menu (contextMenu is a right click)
