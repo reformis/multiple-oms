@@ -1,6 +1,8 @@
 import { ReactNode, useState } from "react";
 import "../styles.css";
 import { Order } from "../types/orders";
+import 'react-statusbar/dist/statusbar.css';
+import * as Statusbar from 'react-statusbar';
 
 /**
  * Full execution:
@@ -57,11 +59,12 @@ export default function Blotter(props: Props) {
             <th>Account</th>
             <th>Manager</th>
             <th>Trader</th>
-            <th style={{minWidth:'65px'}}>Trade Date</th>
+            <th style={{minWidth:'75px'}}>Trade Date</th>
             {/* make settlement date 2 days later */}
-            <th style={{minWidth:'65px'}}>Settlement Date</th>
+            <th style={{minWidth:'75px'}}>Settlement Date</th>
             <th>Status</th>
             <th>Exec Qty</th>
+            <th>Exec Status</th>
             <th>Broker</th>
             <th>Security Type</th>
             <th>Side</th>
@@ -114,7 +117,9 @@ export default function Blotter(props: Props) {
                 {item.status}
               </td>
               <td>{item.executedQuantity}</td>
-              <td>{item.broker}</td>
+              <td><Statusbar.Progress value={item.executedQuantity} max={item.targetQuantity} className="statusBar" />
+                </td>
+              <td>{item.status==='OPEN'?'':item.broker}</td>
               <td>{item.securityType}</td>
               <td
                 style={{

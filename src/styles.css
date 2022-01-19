@@ -231,21 +231,40 @@ form {
   align-content: space-between;
   color: var(--font-color);
   border: 1px solid grey;
-  /* width: 221px; */
+  width: 350px;
   padding: 13px;
   align-items: center;
   /* flex-wrap: wrap; */
   justify-items: stretch;
   /* text-align: left; */
   justify-content: center;
+  background-color: #282E39;
+  position: fixed;
+  right: 35%;
+  top: 10%;
+  border-radius: 6px;
 }
 
 input {
   margin-bottom: 10px;
+  border-radius: 4px;
+  background-color: #535760;
+  border: none;
+  color: white;
+  font-size: 14px;
+  font-family: 'Roboto';
+  outline: none;
 }
+label {
+  font-family: 'Roboto';
+  font-size: 14px;
+  color: white;
+}
+
 
 select {
   margin-bottom: 10px;
+  outline: none;
 }
 
 form div {
@@ -264,11 +283,22 @@ form span {
 
 form select {
   width: 100%;
+  background-color: #535760;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-family: 'Roboto';
 }
 
 form button {
-  width: 50%;
+  width: 60%;
   margin: 0 auto;
+  border-radius: 4px;
+  border: none;
+  font-size: 14px;
+  background-color: #2D95FF;
+  color: white;
+ 
 }
 
 .menu-container {
@@ -278,7 +308,7 @@ form button {
 
 #menu{
   background: #ffffff;
-  border: 1px solid var(--font-color);
+  border: 1px solid white;
   color: var(--context-font-color);
   min-height: 26px;
   /* width: 100px; */
@@ -287,11 +317,18 @@ form button {
   /* justify-content: space-between; */
   /* flex-wrap: nowrap; */
   /* align-items: center; */
+  border-radius: 4px;
+  font-family: 'Roboto';
+  font-size: 15px;
+  margin-top: 4px;
+  background-color: #282e39;
+  color:white;
 }
 
 #menu > ul {
   cursor: pointer;
   display: contents;
+  border-radius: 4px;
 }
 
 #menu > ul li {
@@ -301,7 +338,12 @@ form button {
 }
 
 #menu li:hover {
-  font-weight: 600;
+  background-color: #2D95FF;
+  color: #fff;
+}
+#menu:hover {
+  background-color: #2D95FF;
+  color: #fff;
 }
 
 .buy-button{
@@ -325,4 +367,21 @@ form button {
   border:none;
   color: #FFFFFF;
   width:60px;
+}
+
+.statusBar{
+  height:20px;
+  width: 100px !important;
+}
+
+.Progress-module_fill__3F-Oe {
+  
+  background: #01C38D !important;
+}
+
+.Progress-module_bar__E-mnI {
+  
+  background: white !important;
+  border-radius: 4px;
+  height: 10px;
 }

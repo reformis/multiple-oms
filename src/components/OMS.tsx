@@ -29,16 +29,21 @@ export default function OMS(props: Props) {
   const [orderFormIsVisible, setOrderFormIsVisible] = useState(false);
 
   // display either the order button or the order form
-  const NewOrder = (props:NewOrderProps) =>
-    !orderFormIsVisible ? (
-      <NewOrderButton showForm={() => setOrderFormIsVisible(true)} appCSS={appCSS} />
-    ) : (
-      <OrderForm
-        addOrder={addOrder}
-        appName={appName}
-        hideForm={() => setOrderFormIsVisible(false)}
-      />
-    );
+  const NewOrder = (props:NewOrderProps) =>{
+
+  
+     return (
+        <div>
+          <NewOrderButton showForm={() => setOrderFormIsVisible(true)} appCSS={appCSS} />
+            
+           {orderFormIsVisible && <OrderForm
+              addOrder={addOrder}
+              appName={appName}
+              hideForm={() => setOrderFormIsVisible(false)}
+            />}
+        </div>
+     );
+  }
 
   const Title = () => <header className="App-header">{title}</header>;
 

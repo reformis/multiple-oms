@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { getRandomIntInclusive } from "../utils";
+import moment from "moment";
 
 const SignUpSchema = Yup.object().shape({
   orderId: Yup.string().required("Required"),
@@ -18,7 +19,7 @@ const SignUpSchema = Yup.object().shape({
 });
 
 const initialValues = {
-  orderId: getRandomIntInclusive(1000, 5000),
+  orderId: Math.floor(100000 + Math.random() * 900000),
   ticker: "AAPL",
   targetPrice: 42,
   targetQuantity: 200,
@@ -74,20 +75,21 @@ const SelectField = ({
 }: ISelectField) => (
   <div>
     {label && <label htmlFor={name}>{label}</label>}
-    <Field name={name} disabled={disabled} as="select">
+    <Field name={name} disabled={disabled} as="select" defaultValue={placeholder}>
       {options.length &&
         options.map(({ value, label }) => (
           <option key={value} value={value}>
             {label}
           </option>
         ))}
+        
     </Field>
     <ErrorMessage name={name} component="span" />
   </div>
 );
 
 const CloseButton = ({ hideForm }: { hideForm: () => void }) => (
-  <button onClick={hideForm}>X</button>
+  <button onClick={hideForm} style={{display: "inline-block",marginRight:'50px'}} >Cancel</button>
 );
 
 /**
@@ -105,22 +107,22 @@ export function OrderForm({
   hideForm: () => void;
 }) {
   return (
-    <div>
+    <div style={{}}>
       <Formik
         initialValues={initialValues}
         validationSchema={SignUpSchema}
         onSubmit={(values, actions) => {
-          let date = new Date(values.tradeDate);
-          date.setDate(date.getDate() + 2);
-          const settlementDate = date.toISOString().split("T")[0];
-
+          let tradeDate = moment().format('DD MMM YYYY');
+          const settlementDate = moment().add(2,'days').format('DD MMM YYYY');
           const order = {
             ...values,
             securityId: getRandomIntInclusive(1000, 5000),
+            orderId: Math.floor(100000 + Math.random() * 900000),
+            tradeDate,
             settlementDate,
             targetAmount:
               Number(values.targetPrice) * Number(values.targetQuantity),
-            status: "NEW",
+            status: "OPEN",
             executedQuantity: 0,
           };
 
@@ -132,7 +134,7 @@ export function OrderForm({
           actions.resetForm({
             values: {
               ...initialValues,
-              orderId: getRandomIntInclusive(1000, 5000),
+              orderId: Math.floor(100000 + Math.random() * 900000),
             },
             // you can also set the other form states here
           });
@@ -141,12 +143,12 @@ export function OrderForm({
         }}
       >
         <Form>
-          <CloseButton hideForm={hideForm} />
-          <TextInputField
+          
+          {/* <TextInputField
             name="orderId"
             label="Order ID"
             disabled={true}
-          ></TextInputField>
+          ></TextInputField> */}
           <TextInputField name="ticker" label="Ticker"></TextInputField>
           <TextInputField
             name="targetPrice"
@@ -192,7 +194,7 @@ export function OrderForm({
             label="Trade Date"
             type="date"
           ></TextInputField>
-          <SelectField
+          {/* <SelectField
             name="broker"
             label="Broker"
             options={[
@@ -202,7 +204,8 @@ export function OrderForm({
               { value: "MS", label: "MS" },
               { value: "BARC", label: "BARC" },
             ]}
-          />
+            
+          /> */}
           <SelectField
             name="securityType"
             label="Security Type"
@@ -240,8 +243,12 @@ export function OrderForm({
               { value: "MO", label: "MO" },
             ]}
           />
-
-          <button type="submit">Submit</button>
+          <div> 
+            <button type="submit" style={{display: "inline-block", marginRight:'20px'}}>Submit</button>
+            <CloseButton hideForm={hideForm} />
+            </div>
+         
+          
         </Form>
       </Formik>
     </div>

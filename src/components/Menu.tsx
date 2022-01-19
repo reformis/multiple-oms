@@ -9,9 +9,12 @@ export default function Menu({ order }: { order: Order }) {
           onClick={() => {
             order && sendOrderToCombinedApp(order);
           }}
+          
+         
         >
-          Send Order
+          Send To Combined Blotter
         </li>
+        
       </ul>
     </div>
   );

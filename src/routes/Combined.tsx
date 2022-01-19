@@ -76,8 +76,13 @@ export default function Combined() {
       onClick={() => {
         selectedOrders.forEach((order) => updateFill(order));
       }}
+      style={{ float:'right',marginRight:'10px',marginTop:'4px',borderRadius:'4px',
+        backgroundColor:'#FF274B',
+        border:'none',
+        color: '#FFFFFF',
+        width:'80px'}}
     >
-      execute orders
+      Execute
     </button>
   );
 
@@ -93,29 +98,34 @@ export default function Combined() {
   );
 
   return (
-    <div className={`combined App`}>
-      {/* <header className="App-header">Combined Blotter</header> */}
-      {/* {selectedOrders.length > 0 ? (
-        <>
-          <ExecuteButton />
-          <RemoveOrderButton />
-        </>
-      ) : (
-        <></>
-      )} */}
-       <div style={{height:'25px', backgroundColor:'white', width:'100%'}} >
-         <div style={{textAlign:'left'}}>
-         <img src='Nuveen.png' height='25px'></img> 
-         </div>
-      </div>
+    <div>
+        {/* <div className={`combined App`}> */}
+              {/* <header className="App-header">Combined Blotter</header> */}
+              {/* {selectedOrders.length > 0 ? (
+                <>
+                  <ExecuteButton />
+                  <RemoveOrderButton />
+                </>
+              ) : (
+                <></>
+              )} */}
+               <div className={`combined App-header`}>
+                <ExecuteButton />                
+                <div style={{float:'left', display: 'inline-block'}}><img src='Nuveen.png' height='25px'  /></div>
+              </div>
+              <div className={`combined App`}>
+              
+              
+              <Blotter
+                appName={appName}
+                orders={orders as Order[]}
+                selectedOrders={selectedOrders}
+                rowCheckbox={true}
+                checkboxAction={addSelectedOrder}
+              />
+            </div>
 
-      <Blotter
-        appName={appName}
-        orders={orders as Order[]}
-        selectedOrders={selectedOrders}
-        rowCheckbox={true}
-        checkboxAction={addSelectedOrder}
-      />
     </div>
+    
   );
 }
