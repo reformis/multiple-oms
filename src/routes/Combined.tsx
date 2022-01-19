@@ -1,10 +1,10 @@
-import { addContextListener } from "@finos/fdc3";
+import { broadcast } from "@finos/fdc3";
 import * as FSBL from "@finsemble/finsemble-core";
 import { useCallback, useEffect } from "react";
 import { useImmer } from "use-immer";
 import Blotter from "../components/Blotter";
-import useOrders from "../hooks/useOrders";
-import { Order, OrderContext } from "../types/orders";
+import useOrders, { actions, useOrderEvents } from "../hooks/useOrders";
+import { Order } from "../types/orders";
 
 export default function Combined() {
   const appName = "combined";
@@ -14,39 +14,26 @@ export default function Combined() {
     appName,
   });
 
+  useOrderEvents({ addOrder, updateFill, deleteOrder });
+
   const [selectedOrders, setSelectedOrders] = useImmer<Order[]>([]);
 
   useEffect(() => {
-    const listener = addContextListener(
-      "finsemble.order",
-      (context: OrderContext) => {
-        if (!context.order) return;
-        if (context?.order?.destinationApp !== "combined") return;
-
-        console.log(context.order);
-        context.order.status = "NEW";
-        addOrder(context.order);
-
-        // send a notification
-        if (window.FSBL) {
-          FSBL.Clients.NotificationClient.notify({
-            // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
-            // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
-            // type: "configDefinedType", // Types defined in the config will have those values set as default
-            source: "Finsemble", // Where the Notification was sent from
-            title: `New Order from ${context.order.appName}`,
-            details: `${context.order.ticker} at ${context.order.targetAmount}`,
-            // headerLogo: "URL to Icon",
-            // actions: [], // Note this has no Actions making it Informational
-            // meta: {} // Use the meta object to send any extra data needed in the notification payload
-          });
-        }
-      }
-    );
-    return () => {
-      listener.unsubscribe();
-    };
-  }, [addOrder, appName]);
+    // send a notification
+    if (orders.length && window.FSBL) {
+      FSBL.Clients.NotificationClient.notify({
+        // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
+        // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
+        // type: "configDefinedType", // Types defined in the config will have those values set as default
+        source: "Finsemble", // Where the Notification was sent from
+        title: `New Order from ${orders[0].appName}`,
+        details: `${orders[0].ticker} at ${orders[0].targetAmount}`,
+        // headerLogo: "URL to Icon",
+        // actions: [], // Note this has no Actions making it Informational
+        // meta: {} // Use the meta object to send any extra data needed in the notification payload
+      });
+    }
+  }, [orders]);
 
   const addSelectedOrder = useCallback(
     (order: Order) => {
@@ -65,7 +52,7 @@ export default function Combined() {
   );
 
   const deleteSelectedOrders = useCallback(() => {
-    setSelectedOrders((draft) => {
+    setSelectedOrders(() => {
       return [];
     });
   }, [setSelectedOrders]);
@@ -73,7 +60,14 @@ export default function Combined() {
   const ExecuteButton = () => (
     <button
       onClick={() => {
-        selectedOrders.forEach((order) => updateFill(order));
+        selectedOrders.forEach((order) => {
+          broadcast({
+            type: "finsemble.order",
+            order: { ...order, status: "WORKING" },
+            action: actions.FILL,
+          });
+          // updateFill(order);
+        });
       }}
     >
       execute orders
