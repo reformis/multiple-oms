@@ -1,15 +1,20 @@
 import { addContextListener } from "@finos/fdc3";
 import * as FSBL from "@finsemble/finsemble-core";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useImmer } from "use-immer";
 import Blotter from "../components/Blotter";
+import { ExecuteForm } from "../components/ExecuteForm";
 import useOrders from "../hooks/useOrders";
 import { Order, OrderContext } from "../types/orders";
+import "../styles.css";
 
+export interface ExecuteOrderButtonProps{ 
+  showForm:() => void;
+}
 export default function Combined() {
   const appName = "combined";
 
-  const { orders, addOrder, updateFill, deleteOrder } = useOrders({
+  const { orders, addOrder, updateFill, deleteOrder,updateAndSend, updateOrder } = useOrders({
     defaultValue: [],
     appName,
   });
@@ -25,7 +30,7 @@ export default function Combined() {
         if (context?.order?.destinationApp !== "combined") return;
 
         console.log(context.order);
-        context.order.status = "NEW";
+        // context.order.status = "NEW";
         addOrder(context.order);
 
         // send a notification
@@ -70,17 +75,32 @@ export default function Combined() {
       return [];
     });
   }, [setSelectedOrders]);
-
-  const ExecuteButton = () => (
+  
+  const [orderFormIsVisible, setOrderFormIsVisible] = useState(false);
+  const ExecuteOrder = () =>{
+  
+    return (
+       <div>
+         <ExecuteButton showForm={() => setOrderFormIsVisible(true)}  />
+           
+          {orderFormIsVisible && <ExecuteForm
+             updateAndSend={updateAndSend}
+             appName={appName}
+             selectedOrders={selectedOrders}
+             deleteSelectedOrders={deleteSelectedOrders}
+             hideForm={() => setOrderFormIsVisible(false)}
+           />}
+       </div>
+    );
+ }
+  const ExecuteButton = (props:ExecuteOrderButtonProps) => (
     <button
-      onClick={() => {
-        selectedOrders.forEach((order) => updateFill(order));
-      }}
-      style={{ float:'right',marginRight:'10px',marginTop:'4px',borderRadius:'4px',
-        backgroundColor:'#FF274B',
-        border:'none',
-        color: '#FFFFFF',
-        width:'80px'}}
+      // onClick={() => {
+      //   selectedOrders.forEach((order) => updateFill(order));
+      // }}
+      onClick={props.showForm}
+       className="execute-btn"
+        disabled={selectedOrders.length ===0}
     >
       Execute
     </button>
@@ -110,7 +130,7 @@ export default function Combined() {
                 <></>
               )} */}
                <div className={`combined App-header`}>
-                <ExecuteButton />                
+                <ExecuteOrder />                
                 <div style={{float:'left', display: 'inline-block'}}><img src='Nuveen.png' height='25px'  /></div>
               </div>
               <div className={`combined App`}>
@@ -122,6 +142,7 @@ export default function Combined() {
                 selectedOrders={selectedOrders}
                 rowCheckbox={true}
                 checkboxAction={addSelectedOrder}
+               
               />
             </div>
 

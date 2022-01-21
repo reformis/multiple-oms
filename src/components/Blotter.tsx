@@ -64,6 +64,7 @@ export default function Blotter(props: Props) {
             <th style={{minWidth:'75px'}}>Settlement Date</th>
             <th>Status</th>
             <th>Exec Qty</th>
+            <th>Exec Price</th>
             <th>Exec Status</th>
             <th>Broker</th>
             <th>Security Type</th>
@@ -99,6 +100,8 @@ export default function Blotter(props: Props) {
                     type="checkbox"
                     name="selectRow"
                     onChange={() => checkboxAction && checkboxAction(item)}
+                    disabled={item.status==='READY' || (item.status==='EXECUTING' && item.executedQuantity===item.targetQuantity)}
+                    checked={selectedOrders?.some((x)=>x.orderId===item.orderId)}
                   ></input>
                 </td>
               )}
@@ -113,10 +116,11 @@ export default function Blotter(props: Props) {
               <td>{getName(item.trader)}</td>
               <td>{item.tradeDate}</td>
               <td>{item.settlementDate}</td>
-              <td style={{ fontWeight:'bold' }}>
+              <td contentEditable={true} className={item.status==='EXECUTING'?'td-executing':'td-normal'}>
                 {item.status}
               </td>
               <td>{item.executedQuantity}</td>
+              <td>{item.executedPrice}</td>
               <td><Statusbar.Progress value={item.executedQuantity} max={item.targetQuantity} className="statusBar" />
                 </td>
               <td>{item.status==='OPEN'?'':item.broker}</td>

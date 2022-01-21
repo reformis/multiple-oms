@@ -276,7 +276,7 @@ form div {
 }
 
 form span {
-  color: red;
+  color: rgb(245, 94, 94);
   font-size: 12px;
   font-style: italic;
 }
@@ -384,4 +384,35 @@ form button {
   background: white !important;
   border-radius: 4px;
   height: 10px;
+}
+.execute-btn{
+  float:right;
+  margin-right:10px;
+  margin-top:4px;
+  border-radius:4px;
+  background-color:#FF274B;
+  border:none;
+  color: #FFFFFF;
+  width:80px;
+}
+.execute-btn:disabled,
+.execute-btn.disabled{
+  color:#fff;
+  border-color: #a0a0a0;
+  background-color: #a0a0a0;
+}
+.execute-btn:disabled:hover,
+.execute-btn:disabled:focus,
+.execute-btn.disabled:hover,
+.execute-btn.disabled:focus {
+  color:#fff;
+  border-color: #a0a0a0;
+  background-color: #a0a0a0;
+}
+.td-executing{
+  color:#FF8D00;
+  font-weight:bold;
+}
+.td_normal{
+ font-weight: bold;
 }

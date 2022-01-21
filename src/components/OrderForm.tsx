@@ -124,6 +124,7 @@ export function OrderForm({
               Number(values.targetPrice) * Number(values.targetQuantity),
             status: "OPEN",
             executedQuantity: 0,
+            executedPrice:''
           };
 
           // add the order to state

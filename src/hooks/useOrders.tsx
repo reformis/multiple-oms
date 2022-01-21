@@ -25,6 +25,12 @@ export default function useOrders(props: Props) {
         );
         if (index !== -1) draft[index] = action.order;
         break;
+      case "updateCombined":
+          const combined_index = draft.findIndex(
+            (order) => order.orderId === action.order.orderId
+          );
+          if (combined_index !== -1) draft[combined_index] = action.order;
+          break;
       case "fill":
         //From the order get a placement remove it from the placements array and move it to the fills array
         const orderFillIndex = draft.findIndex(
@@ -65,6 +71,18 @@ export default function useOrders(props: Props) {
         type: "update",
         order: updatedOrder,
       });
+    },
+    [dispatch]
+  );
+
+  const updateAndSend = useCallback(
+    (updatedCombinedOrder: Order) => {
+      dispatch({
+        type: "updateCombined",
+        order: updatedCombinedOrder,
+      });
+      //once this is done, broadcast it back.
+      
     },
     [dispatch]
   );
@@ -158,6 +176,7 @@ export default function useOrders(props: Props) {
     updateFill,
     deleteOrder,
     updateOrder,
+    updateAndSend
   };
 }
 

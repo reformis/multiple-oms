@@ -11,6 +11,7 @@ export interface Order {
   destinationApp?: string;
   duration: string;
   executedQuantity: number;
+  executedPrice: string;
   instruction: string;
   limit: string;
   manager: string;
@@ -18,7 +19,7 @@ export interface Order {
   securityId: string | number;
   securityType: string;
   settlementDate: string | Date;
-  status: "NEW" | "OPEN" | "ACCT" | "WORK" | "READY";
+  status: "NEW" | "OPEN" | "ACCT" | "WORK" | "READY"|"EXECUTING";
   targetAmount: string | number;
   targetPrice: string | number;
   targetQuantity: number;
