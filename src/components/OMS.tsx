@@ -1,5 +1,5 @@
-import { broadcast } from "@finos/fdc3";
-import { useState } from "react";
+import { addContextListener, broadcast } from "@finos/fdc3";
+import { useEffect, useState } from "react";
 import Blotter from "../components/Blotter";
 import ContextMenu from "../components/ContextMenu";
 import Menu from "../components/Menu";
@@ -7,7 +7,7 @@ import NewOrderButton from "../components/NewOrderButton";
 import { OrderForm } from "../components/OrderForm";
 import useOrders from "../hooks/useOrders";
 import {data} from "../mock-data/data2";
-import { Order } from "../types/orders";
+import { Order, OrderContext } from "../types/orders";
 import { shuffle } from "../utils";
 
 interface Props {
@@ -21,7 +21,7 @@ interface NewOrderProps{
 export default function OMS(props: Props) {
   const { appName, appCSS, title } = props;
   // Holds all the state and logic for the orders
-  const { orders, addOrder } = useOrders({
+  const { orders, addOrder, updateOrder,updateFill } = useOrders({
     defaultValue: shuffle(data) as Order[],
     appName,
   });
@@ -52,6 +52,27 @@ export default function OMS(props: Props) {
       <Menu {...props} />
     </ContextMenu>
   );
+
+  useEffect(() => {
+    
+    const listener = addContextListener(
+      "finsemble.order",
+      (context: OrderContext) => {
+        if (!context.order) return;
+        if (context?.order?.destinationApp !== "combined" && !orders.some(order => context.order?.orderId)) return;
+
+        console.log(context.order);
+        context.order.status = "WORK";
+        context.order.targetQuantity===context.order.executedQuantity ?
+          updateFill(context.order)
+        : updateOrder(context.order)
+
+      }
+    );
+    return () => {
+      listener.unsubscribe();
+    };
+  },[appName]);
 
   const broadcastTicker = (order: Order) => {
     broadcast({

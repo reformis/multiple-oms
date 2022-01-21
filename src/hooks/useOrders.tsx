@@ -39,9 +39,11 @@ export default function useOrders(props: Props) {
 
         if (action.executedQuantity) {
           draft[orderFillIndex].executedQuantity = action.executedQuantity;
+          draft[orderFillIndex].executedPrice = action.executedPrice;
         }
         if (action.status) {
           draft[orderFillIndex].status = action.status;
+          draft[orderFillIndex].executedPrice = action.executedPrice;
         }
 
         break;
@@ -71,6 +73,8 @@ export default function useOrders(props: Props) {
         type: "update",
         order: updatedOrder,
       });
+
+      
     },
     [dispatch]
   );
@@ -82,7 +86,11 @@ export default function useOrders(props: Props) {
         order: updatedCombinedOrder,
       });
       //once this is done, broadcast it back.
-      
+      broadcast({
+        type: "finsemble.order",
+         //@ts-ignore
+        order: { ...updatedCombinedOrder },
+      });
     },
     [dispatch]
   );
@@ -118,12 +126,13 @@ export default function useOrders(props: Props) {
             type: "fill",
             orderId: order.orderId,
             status: "READY",
+            executedPrice:order.executedPrice
           });
          
           broadcast({
             type: "finsemble.order",
              //@ts-ignore
-            order: { ...order },
+            order: { ...order, status:'READY' },
           });
           return;
         }
@@ -134,6 +143,7 @@ export default function useOrders(props: Props) {
             orderId: order.orderId,
             executedQuantity: Math.round(fillAmount),
             status: "WORK",
+            executedPrice:order.executedPrice
           });
           fillOrder(fillAmount);
         }, 2000);
@@ -149,26 +159,26 @@ export default function useOrders(props: Props) {
    * If the draft state is !filled and the new state == filled then send Notification.
    *
    */
-  useEffect(() => {
-    const setUpChannelListener = async () => {
-      const channel = await getOrCreateChannel("orders");
-      const listener = channel.addContextListener(
-        "finsemble.order",
-        (context: OrderContext) => {
-          // only add orders if they come from a different app or if they come from the Combined blotter
-          if (!context.order || context?.order?.appName !== "combined") return;
+  // useEffect(() => {
+  //   const setUpChannelListener = async () => {
+  //     const channel = await getOrCreateChannel("orders");
+  //     const listener = channel.addContextListener(
+  //       "finsemble.order",
+  //       (context: OrderContext) => {
+  //         // only add orders if they come from a different app or if they come from the Combined blotter
+  //         if (!context.order || context?.order?.appName !== "combined") return;
 
-          addOrder(context.order);
-        }
-      );
-      return listener;
-    };
+  //         addOrder(context.order);
+  //       }
+  //     );
+  //     return listener;
+  //   };
 
-    const channelListener = setUpChannelListener();
-    return () => {
-      channelListener.then((listener) => listener.unsubscribe());
-    };
-  }, [addOrder]);
+  //   const channelListener = setUpChannelListener();
+  //   return () => {
+  //     channelListener.then((listener) => listener.unsubscribe());
+  //   };
+  // }, [addOrder]);
 
   return {
     orders,

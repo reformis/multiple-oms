@@ -118,7 +118,7 @@ export function ExecuteForm({
         
           const orders= selectedOrders.map(order => {
             return selectedOrders.length===1 ? {
-              ...order,...values,status: 'EXECUTING',executedQuantity:Number(order.executedQuantity)+Number(values.executedQuantity)
+              ...order,...values,status: Number(order.executedQuantity)+Number(values.executedQuantity)===order.targetQuantity?'WAITING FOR ACK':'EXECUTING',executedQuantity:Number(order.executedQuantity)+Number(values.executedQuantity)
             }:{
               ...order,status: 'EXECUTING',broker:values.broker, 
               executedQuantity:(((Number(order.targetQuantity)-Number(order.executedQuantity))*Number(values.executedQuantityPercent))/100)+Number(order.executedQuantity),executedPrice:values.executedPrice

@@ -14,7 +14,7 @@ export interface ExecuteOrderButtonProps{
 export default function Combined() {
   const appName = "combined";
 
-  const { orders, addOrder, updateFill, deleteOrder,updateAndSend, updateOrder } = useOrders({
+  const { orders, addOrder, deleteOrder,updateAndSend, updateOrder } = useOrders({
     defaultValue: [],
     appName,
   });

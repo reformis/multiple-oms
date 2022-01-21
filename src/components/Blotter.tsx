@@ -69,6 +69,7 @@ export default function Blotter(props: Props) {
             <th>Broker</th>
             <th>Security Type</th>
             <th>Side</th>
+            {appName==='combined' && <th style={{minWidth:'75px'}}>System</th>}
             <th>Duration</th>
             <th>Instruction</th>
             <th>Limit</th>
@@ -100,7 +101,7 @@ export default function Blotter(props: Props) {
                     type="checkbox"
                     name="selectRow"
                     onChange={() => checkboxAction && checkboxAction(item)}
-                    disabled={item.status==='READY' || (item.status==='EXECUTING' && item.executedQuantity===item.targetQuantity)}
+                    disabled={item.status==='READY' || (item.status==='EXECUTING' && item.executedQuantity===item.targetQuantity) ||item.status==='WAITING FOR ACK'}
                     checked={selectedOrders?.some((x)=>x.orderId===item.orderId)}
                   ></input>
                 </td>
@@ -116,7 +117,7 @@ export default function Blotter(props: Props) {
               <td>{getName(item.trader)}</td>
               <td>{item.tradeDate}</td>
               <td>{item.settlementDate}</td>
-              <td contentEditable={true} className={item.status==='EXECUTING'?'td-executing':'td-normal'}>
+              <td className={(item.status==='EXECUTING' || item.status==='WAITING FOR ACK')?'td-executing':'td-normal'}>
                 {item.status}
               </td>
               <td>{item.executedQuantity}</td>
@@ -136,6 +137,7 @@ export default function Blotter(props: Props) {
               >
                 {item.transactionType}
               </td>
+              {appName==='combined' && <td>{item.appName}</td>}
               <td>{item.duration}</td>
               <td>{item.instruction}</td>
               <td>{item.limit}</td>

@@ -19,7 +19,7 @@ export interface Order {
   securityId: string | number;
   securityType: string;
   settlementDate: string | Date;
-  status: "NEW" | "OPEN" | "ACCT" | "WORK" | "READY"|"EXECUTING";
+  status: "NEW" | "OPEN" | "ACCT" | "WORK" | "READY"|"EXECUTING"|"WAITING FOR ACK";
   targetAmount: string | number;
   targetPrice: string | number;
   targetQuantity: number;
