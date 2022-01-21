@@ -89,7 +89,7 @@ export default function useOrders(props: Props) {
       broadcast({
         type: "finsemble.order",
          //@ts-ignore
-        order: { ...updatedCombinedOrder },
+        order: { ...updatedCombinedOrder, destinationApp:updatedCombinedOrder.appName },
       });
     },
     [dispatch]
@@ -132,7 +132,7 @@ export default function useOrders(props: Props) {
           broadcast({
             type: "finsemble.order",
              //@ts-ignore
-            order: { ...order, status:'READY' },
+            order: { ...order, status:'READY', destinationApp:'combined' },
           });
           return;
         }

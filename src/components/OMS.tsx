@@ -59,7 +59,7 @@ export default function OMS(props: Props) {
       "finsemble.order",
       (context: OrderContext) => {
         if (!context.order) return;
-        if (context?.order?.destinationApp !== "combined" && !orders.some(order => context.order?.orderId)) return;
+        if (context?.order?.destinationApp !== appName) return;
 
         console.log(context.order);
         context.order.status = "WORK";

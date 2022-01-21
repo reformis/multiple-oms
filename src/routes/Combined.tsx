@@ -1,4 +1,4 @@
-import { addContextListener } from "@finos/fdc3";
+import { addContextListener, broadcast } from "@finos/fdc3";
 import * as FSBL from "@finsemble/finsemble-core";
 import { useCallback, useEffect, useState } from "react";
 import { useImmer } from "use-immer";
@@ -31,22 +31,29 @@ export default function Combined() {
 
         console.log(context.order);
         // context.order.status = "NEW";
-        addOrder(context.order);
+        if(context.order.status==='READY')
+        { 
+          updateOrder(context.order);
+        }
+        else{
+          addOrder(context.order);
+        }
+        
 
         // send a notification
-        if (window.FSBL) {
-          FSBL.Clients.NotificationClient.notify({
-            // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
-            // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
-            // type: "configDefinedType", // Types defined in the config will have those values set as default
-            source: "Finsemble", // Where the Notification was sent from
-            title: `New Order from ${context.order.appName}`,
-            details: `${context.order.ticker} at ${context.order.targetAmount}`,
-            // headerLogo: "URL to Icon",
-            // actions: [], // Note this has no Actions making it Informational
-            // meta: {} // Use the meta object to send any extra data needed in the notification payload
-          });
-        }
+        // if (window.FSBL) {
+        //   FSBL.Clients.NotificationClient.notify({
+        //     // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
+        //     // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
+        //     // type: "configDefinedType", // Types defined in the config will have those values set as default
+        //     source: "Finsemble", // Where the Notification was sent from
+        //     title: `New Order from ${context.order.appName}`,
+        //     details: `${context.order.ticker} at ${context.order.targetAmount}`,
+        //     // headerLogo: "URL to Icon",
+        //     // actions: [], // Note this has no Actions making it Informational
+        //     // meta: {} // Use the meta object to send any extra data needed in the notification payload
+        //   });
+        // }
       }
     );
     return () => {
@@ -105,6 +112,14 @@ export default function Combined() {
       Execute
     </button>
   );
+  const broadcastTicker = (order: Order) => {
+    broadcast({
+      type: "fdc3.instrument",
+      id: {
+        ticker: order.ticker,
+      },
+    });
+  };
 
   const RemoveOrderButton = () => (
     <button
@@ -142,7 +157,7 @@ export default function Combined() {
                 selectedOrders={selectedOrders}
                 rowCheckbox={true}
                 checkboxAction={addSelectedOrder}
-               
+                rowClickAction={broadcastTicker}
               />
             </div>
 
