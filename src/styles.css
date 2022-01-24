@@ -111,8 +111,8 @@
   --secondary-font-color: #353535;
   --even-row-bg: rgb(47, 53, 66);
   --odd-row-bg: rgb(40,46,57);
-  /* --even-row-color: var(--font-color);
-  --odd-row-color: var(--font-color); */
+  --even-row-color: var(--font-color);
+  --odd-row-color: var(--font-color);
   --table-border: 0px solid #4e4e4e;
   --row-hover: #b7b7b7;
   --target-price: #FF8D00;

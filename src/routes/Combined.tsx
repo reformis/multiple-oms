@@ -23,6 +23,7 @@ export default function Combined() {
 
   useEffect(() => {
     document.title="Combined Order Blotter";
+    if(!window.FSBL) return;
     const listener = addContextListener(
       "finsemble.order",
       (context: OrderContext) => {
@@ -41,14 +42,23 @@ export default function Combined() {
        
         //&& !orders.some(order => order.orderId===context?.order?.orderId)
 
-        // send a notification
-        if (window.FSBL && context.order.destinationApp==='combined' && !orders.some(order => order.orderId===context?.order?.orderId)) {
+        // send a notification for new order
+        if (window.FSBL && context.order.destinationApp==='combined' && (context?.order?.status==='OPEN' || context?.order?.status==='WORK')) {
+          FSBL.Clients.NotificationClient.notify({
+            source: "Finsemble", // Where the Notification was sent from
+            title: `New Order from ${context.order.appName}`,
+            details: `Order Id: ${context.order.orderId}, Ticker: ${context.order.ticker}`,
+            headerLogo: "http://localhost:3000/Nuveen.png",
+          });
+        }
+        // send a notification for new order
+        if (window.FSBL && context.order.destinationApp==='combined' && context?.order?.status==='READY') {
           FSBL.Clients.NotificationClient.notify({
             // id: "adf-3484-38729zg", // distinguishes individual notifications - provided by Finsemble if not supplied
             // issuedAt: "2021-12-25T00:00:00.001Z", // The notifications was sent - provided by Finsemble if not supplied
             // type: "configDefinedType", // Types defined in the config will have those values set as default
             source: "Finsemble", // Where the Notification was sent from
-            title: `New Order from ${context.order.appName}`,
+            title: `Order fully executed in ${context.order.appName}`,
             details: `Order Id: ${context.order.orderId}, Ticker: ${context.order.ticker}`,
             headerLogo: "http://localhost:3000/Nuveen.png",
             // actions: [], // Note this has no Actions making it Informational
@@ -61,7 +71,7 @@ export default function Combined() {
     return () => {
       listener.unsubscribe();
     };
-  }, [addOrder, appName]);
+  }, [window.FSBL]);
 
   const addSelectedOrder = useCallback(
     (order: Order) => {

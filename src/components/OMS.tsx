@@ -54,6 +54,7 @@ export default function OMS(props: Props) {
   );
 
   useEffect(() => {
+    if(!window.FSBL) return;
     
     const listener = addContextListener(
       "finsemble.order",
@@ -72,7 +73,7 @@ export default function OMS(props: Props) {
     return () => {
       listener.unsubscribe();
     };
-  },[appName]);
+  },[window.FSBL]);
 
   const broadcastTicker = (order: Order) => {
     broadcast({
