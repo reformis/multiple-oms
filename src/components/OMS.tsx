@@ -90,7 +90,9 @@ export default function OMS(props: Props) {
         {appName==='BBAIM' ? 
         <div style={{float:'left', display: 'inline-block'}}><img src='Bloomberg.png' height='25px'  /></div>
         :
-        <div style={{float:'left', display: 'inline-block'}}><img src='CRD2.png' height='25px'></img></div> }
+        (appName==='CRD'?<div style={{float:'left', display: 'inline-block'}}><img src='CRD2.png' height='25px'></img></div>
+        :<div style={{float:'left', display: 'inline-block'}}><img src='Murex.png' height='25px'></img></div> )
+        }
       </div>
       <div className={`${appCSS} App`}>
       {/* <Title /> */}
