@@ -196,3 +196,14 @@ export const sendOrderToCombinedApp = (order: Order) =>
     //@ts-ignore
     order: { ...order, destinationApp: "combined" },
   });
+
+  export const sendAccountingStatusToCombinedApp = (order: Order,updateOrder?:Function) => 
+  { 
+    updateOrder && updateOrder({...order,status: 'ACCT'});
+    broadcast({
+      type: "finsemble.order",
+      //@ts-ignore
+      order: { ...order, destinationApp: "combined", status:'ACCT' },
+    });
+  }
+  

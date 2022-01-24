@@ -28,6 +28,12 @@ interface InputProps {
   style?:any;
   validate?:any;
 }
+
+const getExecutedQuantity=(targetQuantity:number,executedQuantity:number,executedQuantityPercent:number )=>{
+  let placeQuantity=  (((targetQuantity-executedQuantity)*executedQuantityPercent)/100)+executedQuantity;
+  return Math.floor(placeQuantity);
+}
+
 const TextInputField = ({
   name,
   label,
@@ -121,7 +127,8 @@ export function ExecuteForm({
               ...order,...values,status: Number(order.executedQuantity)+Number(values.executedQuantity)===order.targetQuantity?'WAITING FOR ACK':'EXECUTING',executedQuantity:Number(order.executedQuantity)+Number(values.executedQuantity)
             }:{
               ...order,status: (((Number(order.targetQuantity)-Number(order.executedQuantity))*Number(values.executedQuantityPercent))/100)+Number(order.executedQuantity)===Number(order.targetQuantity)? 'WAITING FOR ACK' :'EXECUTING',broker:values.broker, 
-              executedQuantity:(((Number(order.targetQuantity)-Number(order.executedQuantity))*Number(values.executedQuantityPercent))/100)+Number(order.executedQuantity),executedPrice:values.executedPrice
+              executedQuantity: getExecutedQuantity(Number(order.targetQuantity), Number(order.executedQuantity), Number(values.executedQuantityPercent))
+              ,executedPrice:values.executedPrice
             }
           })         
           orders.forEach(order => {

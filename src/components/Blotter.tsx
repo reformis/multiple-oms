@@ -16,11 +16,12 @@ interface Props {
   appName: string;
   checkboxAction?: Function;
   children?: ReactNode;
-  menu?: ({ order }: { order: Order }) => ReactNode;
+  menu?: ({ order, updateOrder }: { order: Order,updateOrder?:Function }) => ReactNode;
   orders: Array<Order>;
   rowCheckbox?: boolean;
   rowClickAction?: Function;
   selectedOrders?: Order[];
+  action?:Function;
 }
 
 export default function Blotter(props: Props) {
@@ -32,6 +33,7 @@ export default function Blotter(props: Props) {
     rowCheckbox = false,
     rowClickAction,
     selectedOrders,
+    action
   } = props;
 
   const [currentOrder, setCurrentOrder] = useState<Order>();
@@ -43,7 +45,7 @@ export default function Blotter(props: Props) {
 
   return (
     <div>
-      {menu && currentOrder && menu({ order: { ...currentOrder, appName } })}
+      {menu && currentOrder && menu({ order: { ...currentOrder, appName }, updateOrder:action })}
       {props.children}
       <table>
         <thead>
@@ -101,7 +103,7 @@ export default function Blotter(props: Props) {
                     type="checkbox"
                     name="selectRow"
                     onChange={() => checkboxAction && checkboxAction(item)}
-                    disabled={item.status==='READY' || (item.status==='EXECUTING' && item.executedQuantity===item.targetQuantity) ||item.status==='WAITING FOR ACK'}
+                    disabled={item.status==='READY' || (item.status==='EXECUTING' && item.executedQuantity===item.targetQuantity) ||item.status==='WAITING FOR ACK' ||item.status==='ACCT'}
                     checked={selectedOrders?.some((x)=>x.orderId===item.orderId)}
                   ></input>
                 </td>

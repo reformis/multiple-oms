@@ -47,7 +47,7 @@ export default function OMS(props: Props) {
 
   const Title = () => <header className="App-header">{title}</header>;
 
-  const SendOrderMenu = (props: JSX.IntrinsicAttributes & { order: Order }) => (
+  const SendOrderMenu = (props: JSX.IntrinsicAttributes & { order: Order, updateOrder?:Function }) => (
     <ContextMenu>
       <Menu {...props} />
     </ContextMenu>
@@ -100,6 +100,7 @@ export default function OMS(props: Props) {
         orders={orders as Order[]}
         menu={SendOrderMenu}
         rowClickAction={broadcastTicker}
+        action={updateOrder}
       ></Blotter>
     </div>
     </div>
